@@ -1,0 +1,45 @@
+/* UI.Group Control Styles
+===================================================
+
+[1] allow the borders of the next group header or body to overlap
+[2] prevent clicks from starting a selection
+
+*/
+
+.group__header {
+    background: rgb(240, 240, 240);
+    padding: 0 5px;
+    border-top: 1px solid rgb(189, 189, 189);
+    border-bottom: 1px solid rgb(189, 189, 189);
+    line-height: 18px;
+    margin-bottom: -1px;        /* [1] */
+    -webkit-user-select: none;  /* [2] */
+}
+
+.group__header:before {
+    content: "";
+    vertical-align: middle;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right:2px;
+    background-image: url("../img/ui.opener-open.png");
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+}
+
+.group__header:active {
+    background: #ccc;
+}
+
+.group__body {
+    padding: 0 5px;
+}
+
+.group--collapsed .group__header:before {
+     background-image: url("../img/ui.opener-closed.png");
+}
+
+.group--collapsed .group__body {
+    display: none;
+}   

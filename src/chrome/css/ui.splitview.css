@@ -1,0 +1,43 @@
+/* UI.SplitView Control Styles
+=================================================== */
+
+.splitview {
+    border-top: 1px solid rgb(64%, 64%, 64%);
+    box-sizing: border-box;
+}
+
+.splitview {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;  
+    -webkit-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    height: 100%;
+    overflow: hidden;
+}
+
+.splitview__panel, .splitview__splitter {
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    
+}
+.splitview__panel:not(:first-child) {
+    border-left: 1px solid rgb(64%, 64%, 64%);
+}
+.splitview__panel--full {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+.splitview__splitter {
+    width: 6px;
+    cursor: ew-resize;
+    margin: -3px;
+    position: relative;
+    z-index: 100;
+}

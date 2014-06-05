@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Google Analytics Test Page</title>
+    <script>
+        var SPOOF_HOST = "my.website.com",
+            DONT_TRACK = document.location.search !== "?live";
+
+        document.documentElement.className = DONT_TRACK ? "debug" : "live"
+    </script>
+    <style>
+        body {
+            font: 12px/1.2 Arial;
+        }
+        table {
+            table-layout: fixed;
+            border-collapse: collapse;
+            border-color: #ccc;
+            border-style: solid;
+        }
+        td, th {
+            white-space: nowrap;
+            padding: .25em .5em;
+            text-align: left;
+        }
+
+        .live table {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+<h1>Test tool</h1>
+<p>This is a multi-purpose testing tool for Google Analytics. When used in '<a href="?">Debug</a>' mode, it will generate
+    URLs for use in unit tests. When running in '<a href="?live">Live</a>' mode, it will send tracking beacons allowing the GA Debugger
+    extension to be tested in a browser.</p>
+
+<table id="results" border="1">
+    <tr>
+        <th>Tracker</th>
+        <th>Type</th>
+        <th>Data</th>
+        <th>URL</th>
+    </tr>
+</table>
+
+<script>
+(function() {
+
+    // If the tool is running in DEBUG mode we need to intercept the 
+    // tracking beacon generation so we can dump the URLs to the page
+
+    if (DONT_TRACK) {
+        function getParam(param, url) {
+            var re = new RegExp("[?&]" + param + "=([^&]*)");
+            return (re.exec(url) || ['',''])[1];
+        }
+
+        function getParams(params, url) {
+            var out = "";
+            params.forEach(function (param) {
+                var value = getParam(param, url);
+                if (value) {
+                    if (out) {
+                        out += " / "
+                    }
+                    out += value
+                }
+            });
+            return out;
+        }
+
+        function logRequest(url) {
+            var tracker = /__utm.gif?/.test(url) ? "UTM" : "UA",
+                type = (/[?&](?:utm)?t=([^&]*)/.exec(url) || ['','pageview'])[1],
+                title = (/[?&](?:utm)?dt=([^&]*)/.exec(url) || ['', ''])[1],
+                data;
+
+            // switch out the current domain for our spoofed one (so test URLs are consistent)
+            url = url.replace(new RegExp(encodeURIComponent(document.location.host), "g"), encodeURIComponent(SPOOF_HOST));
+            url = url.replace(new RegExp(encodeURIComponent(document.location.pathname), "g"), encodeURIComponent('/'));
+
+            // generate the data column value
+            if (type === "social") {
+                data = getParams(["utmsn", "utmsa", "utmsid", "sn", "sa", "st"], url)
+            } else if (type === "event") {
+                data = getParams(["utme", "utmni", "ec", "ea", "el", "ev", "ni"], url)
+            } else if (type === "tran") {
+                data = getParams(["utmtto", "utmttx", "utmtsp"], url)
+            } else if (type === "transaction") {
+                data = getParams(["tr", "tt", "ts"], url)
+            } else if (type === "item") {
+                data = getParams(["utmiqt","utmipn", "utmipr", "iq", "in", "ip"], url)
+            } else {
+                data = getParams(["utmp", "dp"], url);
+            }
+            document.getElementById("results").innerHTML += 
+                "<tr><td>" + tracker + "</td>" +
+                "<td>" + type + "</td>" +
+                "<td>" + decodeURIComponent(data) + "</td>" +
+                "<td>" + url + "</td></tr>";
+        }
+
+        var originalImage = window.Image,
+            originalCreateElement = document.createElement,
+            stubbedImage = Object.defineProperties({}, {
+                src: {
+                    set: function (x) {
+                        logRequest(x);
+                    }
+                }
+            });
+
+        window.Image = function (w, h) {
+            return stubbedImage;
+        }
+
+        document.createElement = function (tag) {
+            var elem = originalCreateElement.call(document, tag);
+            if (elem.tagName === "IMG") {
+                return stubbedImage;
+            }
+            return elem;
+        }
+    }
+}());
+</script>
+
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    /*(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();*/
+</script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+</script>
+
+
+
+<script>
+/* account creation
+------------------------------------------------------- */
+ga('create', 'UA-XXXX-Y', 'auto');
+_gaq.push(['_setAccount', 'UA-AAAA-B']);
+
+
+/* page view
+------------------------------------------------------- */
+ga('send', 'pageview');
+_gaq.push(['_trackPageview']);
+
+ga('send', 'pageview', '/custom/path.html');
+_gaq.push(['_trackPageview', '/custom/path.html']);
+
+ga('send', 'pageview', '/custom/path.html?key=value');
+_gaq.push(['_trackPageview', '/custom/path.html?key=value']);
+
+
+/* Events
+------------------------------------------------------- */
+ga('send', 'event', 'category', { title: 'Category' });
+_gaq.push(['_trackEvent', 'category']);
+
+ga('send', 'event', 'category', 'action');
+_gaq.push(['_trackEvent', 'category', 'action']);
+
+ga('send', 'event', 'category', 'action', 'label');
+_gaq.push(['_trackEvent', 'category', 'action', 'label']);
+
+ga('send', 'event', 'category', 'action', 'label', 1);
+_gaq.push(['_trackEvent', 'category', 'action', 'label', 1]);
+
+ga('send', 'event', 'category', 'action', 'label', 1, {'nonInteraction': 1});
+_gaq.push(['_trackEvent', 'category', 'action', 'label', 1, true]);
+
+
+/* Social
+------------------------------------------------------- */
+ga('send', 'social', 'network');
+_gaq.push(['_trackSocial', 'network']);
+
+ga('send', 'social', 'network', 'action');
+_gaq.push(['_trackSocial', 'network', 'action']);
+
+ga('send', 'social', 'network', 'action', 'target');
+_gaq.push(['_trackSocial', 'network', 'action', 'target']);
+
+_gaq.push(['_trackSocial', 'network', 'action', 'target', 'targetPath']);
+
+
+/* Ecommerce
+------------------------------------------------------- */
+
+ga('require', 'ecommerce', 'ecommerce.js');
+ga('ecommerce:addTransaction', {
+    'id': '1234',
+    'affiliation': 'affiliation',
+    'revenue': '12.34',
+    'shipping': '5.67',
+    'tax': '8.90',
+    'currency': 'EUR'
+});
+ga('ecommerce:addItem', {
+    'id': '1234',
+    'name': 'name', 
+    'sku': 'sku',
+    'category': 'category',
+    'price': '12.34',
+    'quantity': '1'
+});
+ga('ecommerce:send');
+
+_gaq.push(['_addTrans',
+     '1234', 
+     'affiliation',   // affiliation or store name
+     '12.34',         // total - required
+     '8.90',          // tax
+     '5.67',          // shipping
+     'city',          // city
+     'state',         // state or province
+     'country'        // country
+]);
+_gaq.push(['_addItem',
+     '1234',          // transaction ID - necessary to associate item with transaction
+     'sku',           // SKU/code - required
+     'name',          // product name
+     'category',      // category or variation
+     '12.34',         // unit price - required
+     '1'              // quantity - required
+]);
+_gaq.push(['_trackTrans']);
+
+
+/* User Timings
+------------------------------------------------------- */
+
+ga('send', 'timing', 'Category', 'Var', 1234);
+ga('send', 'timing', 'Category', 'Var', 1234, 'Label');
+
+
+/* Custom Variables (UTM only)
+------------------------------------------------------- */
+
+for (var c = 1; c <= 5; c++) {
+    _gaq.push(['_setCustomVar', c, 'Name ' + c, 'Value ' + c, ((c-1) % 3)+1]);
+}
+_gaq.push(['_trackPageview', '/custom-var-test']);
+
+// clear custom vars so they don't appear in subsequent tests
+for (var c = 1; c <= 5; c++) {
+    _gaq.push(['_deleteCustomVar', c]);
+}
+
+for (var c = 1; c <= 5; c+=2) {
+    _gaq.push(['_setCustomVar', c, 'Name ' + c, 'Value ' + c, ((c-1) % 3)+1]);
+}
+_gaq.push(['_trackPageview', '/custom-var-test-2']);
+
+// clear custom vars so they don't appear in subsequent tests
+for (var c = 1; c <= 5; c++) {
+    _gaq.push(['_deleteCustomVar', c]);
+}
+
+
+/* Custom Dimensions (UA only)
+------------------------------------------------------- */
+
+for (var c = 1; c <= 20; c++) {
+    ga('set', 'dimension' + c, 'Custom dimension ' + c + ' data');
+}
+ga('send', 'pageview', '/custom-dimension-test');
+
+// clear custom metrics so they don't appear in subsequent tests
+for (var c = 1; c <= 20; c++) {
+    ga('set', 'dimension' + c, null);
+}
+
+
+/* Custom Metrics (UA only)
+------------------------------------------------------- */
+
+for (var c = 1; c <= 20; c++) {
+    ga('set', 'metric' + c, c);
+}
+ga('send', 'pageview', '/custom-metric-test');
+
+// clear custom metrics so they don't appear in subsequent tests
+for (var c = 1; c <= 20; c++) {
+    ga('set', 'metric'+c, null);
+}
+
+/* Content Groups
+------------------------------------------------------- */
+
+for (var c = 1; c <= 5; c++) {
+    ga('set', 'contentGroup' + c, 'Content Group ' + c);
+    _gaq.push(['_setPageGroup', c, 'Content Group ' + c]);
+}
+ga('send', 'pageview', '/content-group-test');
+_gaq.push(['_trackPageview', '/content-group-test']);
+
+// clear custom metrics so they don't appear in subsequent tests
+for (var c = 1; c <= 20; c++) {
+    ga('set', 'contentGroup' + c, null);
+}
+
+
+/* Screen Name (UA only)
+------------------------------------------------------- */
+
+ga('set', 'screenName', 'Screen Name');
+ga('send', 'pageview', '/screen-name-test');
+ga('set', 'screenName', null);
+
+</script>
+
+</body>
+</html>

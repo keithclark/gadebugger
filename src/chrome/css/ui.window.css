@@ -1,0 +1,33 @@
+/* UI.SplitView Control Styles
+=================================================== */
+
+/* Default styles
+---------------------------------------------------
+
+[1] Ensure the content fills the devtools panel
+[2] Set the cursor so it behaves the same way as other devtools panels
+
+*/
+
+html, body {
+    height: 100%;       /* [1] */
+    margin: 0;          /* [1] */
+    padding: 0;         /* [1] */
+    cursor: default;    /* [2] */
+    font-size: 12px;
+    font-family: 'Lucida Grande', sans-serif;
+}
+
+
+/* Global UI state styles
+--------------------------------------------------- */
+
+.state--selected {
+    background-color: rgb(56, 121, 217);
+    color: rgb(255, 255, 255);
+}
+
+.state--inactive .state--selected {
+    background-color: rgb(212, 212, 212);
+    color: inherit;
+}

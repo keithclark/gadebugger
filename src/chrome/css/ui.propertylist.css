@@ -1,0 +1,103 @@
+/* UI.PropertyList  Control Styles
+=================================================== */
+
+/* Property styles
+--------------------------------------------------- */
+
+.property {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.property__name, .property__value {
+    font-family: Menlo, monospace;
+    font-size: 11px;
+}
+.property__name {
+    color: #c00;
+}
+.property__name:after {
+    content: ": ";
+    color: #000;
+}
+
+/* properties aren't removed from the DOM, we just hide them to preserve state */
+ .property[hidden] + .property-list {
+    display: none;
+}
+
+/* [1] if a property was a complex type but is now simple we hide the opener and children */
+
+.property:not(.property--object) > .property__opener {
+    display: none; /* [1] */
+}
+
+.property:not(.property--object) + .property-list {
+    display: none; /* [1] */
+}
+
+/* Property types
+--------------------------------------------------- */
+
+.property--boolean {
+    color: #c4f;
+}
+.property--object {
+    color: #666;
+}
+.property--number {
+    color: #0c0;
+}
+.property--string {
+    color: #00c;
+}
+.property--string > .property__value:before,
+  .property--string > .property__value:after {
+    content: "\"";
+}
+.property--undefined {
+   opacity: .3;
+}
+
+/* Property List styles
+--------------------------------------------------- */
+
+.property-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.property-list .property-list {
+    padding-left: 14px;
+}
+.property-list .property__opener {
+    margin-right: -14px;
+}
+.property-list .property__name {
+    padding-left: 14px;
+}
+
+/* Opener styles
+---------------------------------------------------
+
+[1] prevent clicks from starting a selection
+
+*/
+
+.property__opener {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../img/ui.opener-open.png");
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+    -webkit-user-select: none;  /* [1] */
+}
+.property--collapsed .property__opener {
+    background-image: url("../img/ui.opener-closed.png");
+}
+.property--collapsed + .property-list {
+    display: none;
+}

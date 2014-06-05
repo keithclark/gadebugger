@@ -1,0 +1,118 @@
+
+.sidebar {
+    background-color: rgb(214, 221, 229);
+}
+
+.sidebar__title {
+    position: relative;
+    height: 18px;
+    padding: 1px 10px 6px 10px;
+    white-space: nowrap;
+    margin-top: 1px;
+    color: rgb(92, 110, 129);
+    text-shadow: rgba(255, 255, 255, 0.75) 0 1px 0;
+    text-transform: uppercase;
+}
+
+
+/* Beacon styles
+--------------------------------------------------- */
+
+.beacon {
+    background-position: 5px 50%;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+.beacon--pageview {
+    background-image: url(../img/beacon-pageview.png);
+}
+
+.beacon--event {
+    background-image: url(../img/beacon-event.png);
+}
+
+.beacon--transaction {
+    background-image: url(../img/beacon-transaction.png);
+}
+
+.beacon--social {
+    background-image: url(../img/beacon-social.png);
+}
+
+.beacon--item {
+    background-image: url(../img/beacon-transactionitem.png);
+    background-position: 30px 50%;
+    padding-left: 50px;
+}
+
+/* indent anything that's not a pageview if it follows a pageview (so they appear grouped) */
+.beacon--pageview ~ .beacon:not(.beacon--pageview) {
+    background-position: 30px 50%;
+    padding-left: 50px;
+}
+
+/* indent transaction items so they appear nested under transactions */
+.beacon--pageview ~ .beacon.beacon--item {
+    background-position: 55px 50%;
+    padding-left: 75px;
+}
+
+
+/* Tracker list styles
+--------------------------------------------------- */
+
+#tracker-list {
+    min-width: 50px;
+    max-width: 30%;
+    width: 220px;
+}
+
+#tracker-list i {
+    font-style: normal;
+    font-size: 80%;
+    color: #999;
+    display: block;
+}
+
+#tracker-list li {
+    padding: 5px 10px;
+}
+
+
+/* Beacon list styles
+--------------------------------------------------- */
+
+#tracker-data li {
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;    
+}
+
+#tracker-data .beacon {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+
+/* Beacon inspector styles
+--------------------------------------------------- */
+
+#beacon-props {
+    max-width: 60%;
+    min-width: 200px;
+    width: 400px;
+}
+
+#beacon-props .property__name {
+    display: inline-block;
+    width: 14em;
+    font: inherit;
+}
+
+#beacon-props ul:not(:empty) {
+    padding-top:2px;
+    padding-bottom:2px;
+}
