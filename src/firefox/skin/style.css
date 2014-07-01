@@ -1,0 +1,70 @@
+
+.tracker__domain {
+    font-size: 90%;
+}
+
+.theme-dark .tracker__domain {
+    color: #b6babf;
+}
+
+.theme-light .selected .tracker__domain {
+    color: #ebeced;
+}
+
+.theme-dark .tracker__id {
+    color: #f5f7fa;
+}
+
+.theme-dark .zebra-striped .side-menu-widget-item:not(.selected):nth-child(odd) {
+    background-color: rgba(255,255,255,0.05);
+}
+
+.theme-light .zebra-striped .side-menu-widget-item:not(.selected):nth-child(odd) {
+    background-color: rgba(128,128,128,0.05);
+}
+
+
+.zebra-striped .side-menu-widget-item {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.beacon {
+    background-position: 5px 50%;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+
+.beacon--pageview {
+    background-image: url(beacon-pageview.png);
+}
+
+.beacon--event {
+    background-image: url(beacon-event.png);
+}
+
+.beacon--social {
+    background-image: url(beacon-social.png);
+}
+
+.beacon--transaction {
+    background-image: url(beacon-transaction.png);
+}
+
+.beacon--item {
+    background-image: url(beacon-transactionitem.png);
+    background-position: 25px 50%;
+    padding-left: 40px;
+}
+
+/* indent anything that's not a pageview if it follows a pageview (so they appear grouped) */
+.beacon--pageview ~ .beacon:not(.beacon--pageview) {
+    background-position: 25px 50%;
+    padding-left: 40px;
+}
+
+/* indent transaction items so they appear nested under transactions */
+.beacon--pageview ~ .beacon.beacon--item {
+    background-position: 45px 50%;
+    padding-left: 60px;
+}

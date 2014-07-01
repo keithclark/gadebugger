@@ -1,10 +1,8 @@
 # Google Analytics Debugger Extension
 
-*For the time being this project will only build a Chrome extension. An older [Firefox add-on](http://keithclark.co.uk/labs/google-analytics-debugger) is available and will be migrated into this project in the future.*
-
 ![A screengrab of Google Analytics Debugger in Chrome](http://keithclark.co.uk/labs/google-analytics-debugger/screengrab.png)
 
-Google Analytics Debugger is a browser extension for exposing tracking beacon data to developers so they can test their analytics implementations. The extension will capture tracking beacons from Classic/Traditional Analytics and Universal Analytics.
+Google Analytics Debugger is a devtools extension for Chrome and Firefox that exposes tracking beacon data to developers so they can test their analytics implementations. The extension will capture tracking beacons from Classic/Traditional Analytics and Universal Analytics.
 
 Google Analytics Debugger will log the following interactions and data:
 
@@ -43,6 +41,7 @@ This will build the core, the browser extensions and start a watch task. If you 
 
     grunt core                   // builds the core
     grunt core chrome            // builds the chrome extension (requires core)
+    grunt core firefox           // builds the firefox extension (requires core)
 
 
 ## Installing the extension
@@ -52,6 +51,12 @@ This will build the core, the browser extensions and start a watch task. If you 
 First, make sure you've built the chrome extension. Browse to [chrome://extensions](chrome://extensions/), tick the **'Developer mode'** option, click **'Load unpacked extension'** and select the `build/chrome` folder. If all goes well, when you open/restart devtools you should see a **'GA Debugger'** panel.
 
 If you modify the core or chrome source code you'll need to rebuild the extension (the watch task will do this for you) and then restart devtools to see your changes.
+
+### Firefox
+
+First, make sure you've built the Firefox add-on. Browse to your Firefox profile, find the extensions folder and create a new text file named `gadebugger@keithclark.co.uk`, paste the path to the Firefox build directoy and restart firefox.
+
+If you modify the core or add-on source code you'll need to rebuild the extension (the watch task will do this for you) and then restart devtools to see your changes.
 
 
 ## Notes

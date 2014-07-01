@@ -35,6 +35,17 @@ module.exports = function(grunt) {
             'src/chrome/css/ui.propertylist.css',
             'src/chrome/css/ui.itemlist.css',
             'src/chrome/css/gadebugger.css'
+        ],
+        firefox: [
+            'src/firefox/chrome/tool.xul',
+            'src/firefox/chrome/tool.js',
+            'src/firefox/chrome/panel.js',
+            'src/firefox/locale/**',
+            'src/firefox/skin/**',
+            'src/firefox/*'
+        ],
+        firefoxScripts: [
+            'build/core.js'
         ]
     };
 
@@ -105,13 +116,12 @@ module.exports = function(grunt) {
                     process: indentContent
                 },
                 nonull: true
-            }/*,
-            firefox: {
-                src: [
-                    'build/core.js'
-                ],
-                dest: 'build/firefox/chrome/content/index.js'
-            }*/
+            },
+            firefoxJS: {
+                src: files.firefoxScripts,
+                dest: 'build/firefox/chrome/core.js',
+                nonull: true
+            }
         },
 
         copy: {
@@ -130,22 +140,20 @@ module.exports = function(grunt) {
                 src: files.chrome.map(function (file) {
                     return localisePath(file, 'src/chrome/'); // remove the CWD
                 })
-            }/*,
+            },
             firefox: {
                 options: {
                     process: function(content) {
                         return grunt.config.process(content);
                     }
                 },
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'src/firefox/',
-                        dest: 'build/firefox/',
-                        src: ['**']
-                    }
-                ]
-            }*/
+                expand: true,
+                cwd: 'src/firefox/',
+                dest: 'build/firefox/',
+                src: files.firefox.map(function (file) {
+                    return localisePath(file, 'src/firefox/'); // remove the CWD
+                })
+            }
         },
 
         watch: {
@@ -174,6 +182,17 @@ module.exports = function(grunt) {
             chromeCSS: {
                 files: files.chromeStylesheets,
                 tasks: ['concat:chromeCSS']
+            },
+            firefox: {
+                files: files.firefox,
+                tasks: ['copy:firefox'],
+                options: {
+                    spawn: false
+                }
+            },
+            firefoxJS: {
+                files: files.firefoxScripts,
+                tasks: ['concat:firefoxJS']
             }
         }
     });
@@ -181,6 +200,9 @@ module.exports = function(grunt) {
     grunt.event.on('watch', function(action, filepath, target) {
         if (target === "chrome") {
             grunt.config('copy.chrome.src', localisePath(filepath, 'src/chrome/')); // remove the CWD
+        }
+        if (target === "firefox") {
+            grunt.config('copy.firefox.src', localisePath(filepath, 'src/firefox/')); // remove the CWD
         }
     });
 
@@ -193,6 +215,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('core', 'Builds the shared Google Analytics Core scripts.', ['jshint:core', 'nodeunit:core', 'concat:core']);
     grunt.registerTask('chrome', 'Builds the GA Debugger extension for Google Chrome.', ['jshint:chrome', 'concat:chromeJS', 'concat:chromeCSS', 'copy:chrome']);
-    grunt.registerTask('default', 'Builds everything and watches for changes', ['core', 'chrome', 'watch']);
+    grunt.registerTask('firefox', 'Builds the GA Debugger extension for Firefox.', ['concat:firefoxJS', 'copy:firefox']);
+    grunt.registerTask('default', 'Builds everything and watches for changes', ['core', 'chrome', 'firefox', 'watch']);
 
 };
