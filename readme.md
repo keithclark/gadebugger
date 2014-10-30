@@ -1,6 +1,6 @@
 # Google Analytics Debugger Extension
 
-![A screengrab of Google Analytics Debugger in Chrome](http://keithclark.co.uk/labs/google-analytics-debugger/screengrab.png)
+![Google Analytics Debugger in Chrome (above) and Firefox (below)](screengrab.png)
 
 Google Analytics Debugger is a devtools extension for Chrome and Firefox that exposes tracking beacon data to developers so they can test their analytics implementations. The extension will capture tracking beacons from Classic/Traditional Analytics and Universal Analytics.
 
