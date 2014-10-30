@@ -9,6 +9,7 @@
     <em:description><%= pkg.description %></em:description>
     <em:creator><%= pkg.author.name %></em:creator>
     <em:homepageURL><%= pkg.homepage %></em:homepageURL>
+    <em:iconURL>chrome://gadebugger/skin/icon.svg</em:iconURL>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
