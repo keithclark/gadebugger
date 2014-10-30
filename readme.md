@@ -54,7 +54,7 @@ If you modify the core or chrome source code you'll need to rebuild the extensio
 
 ### Firefox
 
-First, make sure you've built the Firefox add-on. Browse to your Firefox profile, find the extensions folder and create a new text file named `gadebugger@keithclark.co.uk`, paste the path to the Firefox build directoy and restart firefox.
+First, make sure you've built the Firefox add-on. Browse to your Firefox profile, find the extensions folder and create a new text file named `gadebugger@browserextensions.keithclark.co.uk`, paste the path to the Firefox build directoy and restart firefox.
 
 If you modify the core or add-on source code you'll need to rebuild the extension (the watch task will do this for you) and then restart devtools to see your changes.
 

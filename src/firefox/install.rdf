@@ -3,7 +3,7 @@
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
   <Description about="urn:mozilla:install-manifest">
-    <em:id>gadebugger@keithclark.co.uk</em:id>
+    <em:id>gadebugger@browserextensions.keithclark.co.uk</em:id>
     <em:version><%= pkg.version %></em:version>
     <em:name><%= pkg.name %></em:name>
     <em:description><%= pkg.description %></em:description>
