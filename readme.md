@@ -44,7 +44,7 @@ This will build the core, the browser extensions and start a watch task. If you 
     grunt core firefox           // builds the firefox extension (requires core)
 
 
-## Installing the extension
+## Installing the extension for development
 
 ### Chrome
 
@@ -57,6 +57,13 @@ If you modify the core or chrome source code you'll need to rebuild the extensio
 First, make sure you've built the Firefox add-on. Browse to your Firefox profile, find the extensions folder and create a new text file named `gadebugger@browserextensions.keithclark.co.uk`, paste the path to the Firefox build directoy and restart firefox.
 
 If you modify the core or add-on source code you'll need to rebuild the extension (the watch task will do this for you) and then restart devtools to see your changes.
+
+
+## Building distributable extensions
+
+The `dist` task will package each extension into its distributable format, ready to be installed in the browser. You can run this task (once you have build the extensions) using:
+
+	grunt dist                    // create distributable extensions
 
 
 ## Notes

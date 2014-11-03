@@ -156,6 +156,23 @@ module.exports = function(grunt) {
             }
         },
 
+        compress: {
+            firefox: {
+                options: {
+                    mode: 'zip',
+                    archive: function() {
+                        return 'dist/gadebugger-' + grunt.config('pkg.version') + ".xpi";
+                    }
+                },
+                files: [{
+                    src: ['**'],
+                    cwd: 'build/firefox/',
+                    dest: '',
+                    expand: true
+                }]
+            }
+        },
+
         watch: {
             gruntfile: {
                 files: 'gruntfile.js',
@@ -212,10 +229,46 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
     grunt.registerTask('core', 'Builds the shared Google Analytics Core scripts.', ['jshint:core', 'nodeunit:core', 'concat:core']);
     grunt.registerTask('chrome', 'Builds the GA Debugger extension for Google Chrome.', ['jshint:chrome', 'concat:chromeJS', 'concat:chromeCSS', 'copy:chrome']);
     grunt.registerTask('firefox', 'Builds the GA Debugger extension for Firefox.', ['concat:firefoxJS', 'copy:firefox']);
+    grunt.registerTask('dist', 'Builds the GA Debugger extensions', function() {
+        var exec = require('child_process').exec,
+            fs = require('fs'),
+            done = grunt.task.current.async();
+
+        fs.exists('build/firefox', function (exists) {
+            if (exists) {
+                grunt.task.run('compress:firefox');
+            }
+        });
+
+        fs.exists('build/chrome', function (exists) {
+            if (exists) {
+                grunt.log.writeln('Building Chrome extension')
+                exec('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --pack-extension=build/chrome --pack-extension-key=chrome.pem', {}, function (err) {
+                    if (err) {
+                        grunt.log.error(err);
+                        done(err);
+                    } else {
+                        fs.rename('build/chrome.crx', 'dist/gadebugger-' + grunt.config('pkg.version') + '.crx', function (err) {
+                            if (err) {
+                                grunt.log.error(err);
+                            } else {
+                                grunt.log.ok('Ok');
+                            }
+                            done(err)
+                        });
+                    }
+                });
+            } else {
+                done();
+            }
+        });
+    });
+
     grunt.registerTask('default', 'Builds everything and watches for changes', ['core', 'chrome', 'firefox', 'watch']);
 
 };
