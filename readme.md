@@ -68,4 +68,4 @@ The `dist` task will package each extension into its distributable format, ready
 
 ## Notes
 
-The GA debugger repository contains GACore and the Chrome devtools extension. GACore is a library for inspecting Google Analytics tracking beacons and is used by all browser extensions. GACore can also stand alone if required.
+The GA debugger repository contains GACore and the browser extensions. GACore is a library for inspecting Google Analytics tracking beacons and is used by all browser extensions. GACore can also stand alone if required.
