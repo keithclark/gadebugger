@@ -44,7 +44,7 @@ This will build the core, the browser extensions and start a watch task. If you 
     grunt core firefox           // builds the firefox extension (requires core)
 
 
-## Installing the extension
+## Installing the extension for development
 
 ### Chrome
 
@@ -59,6 +59,13 @@ First, make sure you've built the Firefox add-on. Browse to your Firefox profile
 If you modify the core or add-on source code you'll need to rebuild the extension (the watch task will do this for you) and then restart devtools to see your changes.
 
 
+## Building distributable extensions
+
+The `dist` task will package each extension into its distributable format, ready to be installed in the browser. You can run this task (once you have build the extensions) using:
+
+	grunt dist                    // create distributable extensions
+
+
 ## Notes
 
-The GA debugger repository contains GACore and the Chrome devtools extension. GACore is a library for inspecting Google Analytics tracking beacons and is used by all browser extensions. GACore can also stand alone if required.
+The GA debugger repository contains GACore and the browser extensions. GACore is a library for inspecting Google Analytics tracking beacons and is used by all browser extensions. GACore can also stand alone if required.

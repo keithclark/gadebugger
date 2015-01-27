@@ -7,7 +7,7 @@
     "name": "Keith Clark",
     "url": "http://keithclark.co.uk"
   },
-  "repository" : {
+  "repository": {
     "type": "git",
     "url": "http://github.com/keithclark/gadebugger.git"
   },
@@ -17,6 +17,7 @@
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-nodeunit": "~0.3.3",
-    "grunt-contrib-watch": "~0.6.1"
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-compress": "~0.12.0"
   }
 }
