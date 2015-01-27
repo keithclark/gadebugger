@@ -55,8 +55,8 @@
   .property--string > .property__value:after {
     content: "\"";
 }
-.property--undefined {
-   opacity: .3;
+.property--undefined, .property--null {
+    color: #999;
 }
 
 /* Property List styles
