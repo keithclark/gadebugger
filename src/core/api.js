@@ -4,11 +4,17 @@ var GACoreAPI = (function() {
 
     'use strict';
 
+    var HOSTS = [
+        'www.google-analytics.com',
+        'ssl.google-analytics.com',
+        'stats.g.doubleclick.net'
+    ];
+
     function parseBeacon(url) {
         var uri = Utils.parseUri(url),
             beacon;
 
-        if (uri && uri.hostname.match(/\.google-analytics\.com$/)) {
+        if (uri && HOSTS.indexOf(uri.hostname) > -1) {
             if (uri.path === '/collect') {
                 beacon = new UaBeacon(url);
             } else if (uri.path === '/__utm.gif') {
