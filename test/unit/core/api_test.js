@@ -2,8 +2,8 @@ var fs = require('fs');
 
 eval(fs.readFileSync('src/core/api.js').toString());
 eval(fs.readFileSync('src/core/utils.js').toString());
-eval(fs.readFileSync('src/core/uabeacon.js').toString());
-eval(fs.readFileSync('src/core/utmbeacon.js').toString());
+eval(fs.readFileSync('src/core/uaBeacon.js').toString());
+eval(fs.readFileSync('src/core/utmBeacon.js').toString());
 
 module.exports = {
     "API.parseBeacon": {
