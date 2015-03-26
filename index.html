@@ -1,1 +1,307 @@
-My Page
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="A Chrome, Firefox and Opera devtools extension to inpsect Google Analytics tracking data.">
+<title>Google Analytics Debugger</title>
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font: 100% / 1.5 "Merriweather";
+    color: #444;
+}
+h2 {
+    font-size: 145%;
+    color: #000;
+}
+p {
+    margin: 1.5em 0;
+}
+a {
+    color: #fa2;
+}
+img {
+    max-width: 100%;
+}
+.small {
+    font-size: 80%;
+}
+.button {
+    text-decoration: none;
+    color: #fff;
+    padding: 1em 1.5em;
+    margin: .25em;
+    background: #e82;
+    border-radius: .4em;
+    display: inline-block;
+    text-shadow: 0 1px 1px rgba(0,0,0,.85);
+    box-shadow: inset 0 -2px 0 0px rgba(0,0,0,.33),
+                      0 1px 1px 1px rgba(0,0,0,.5);
+}
+.button:hover {
+    background-color:#c60;
+}
+
+.slide {
+    padding: 3em;
+    background: #f8fcfe;
+}
+.slide--alt {
+    background: #e8ecee;
+}
+.slide--inv {
+    background: #313a42;
+    color: #ccc;
+}
+.slide__content {
+    max-width: 65em;
+    margin: auto;
+}
+
+.masthead {
+    text-align: center;
+}
+.masthead__title {
+    line-height: 1.25;
+    font-size: 380%;
+    margin: 0 0 .2em 0;
+    color: #fff;
+    text-shadow: 0 3px 0 rgba(0,0,0,.75);
+}
+.masthead__strap {
+    font-size: 150%;
+    margin: 0 0 2em 0;
+    color: #aaa;
+    text-shadow: 0 2px 0 rgba(0,0,0,.75);
+}
+.masthead__image {
+    margin-top: 1em;
+    margin-bottom: 3em;
+    border-radius: 5px;
+}
+
+.footer {
+    padding: 2% 5%;
+    text-align: center;
+}
+
+.feature__image img {
+    display: block;
+}
+
+.animation {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,.25);
+    max-width:100%;
+}
+
+@media screen and (max-width: 37em) {
+    body {
+        font-size:75%;
+    }
+    .masthead__image {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 47em) {
+    .masthead {
+        margin:2em auto;
+    }
+    .feature {
+        margin: 4em auto;
+        display: flex;
+        align-items: center;
+    }
+    .feature__image, .feature__info {
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: middle;
+        width: 49.5%;
+        padding: 2em;
+    }
+    .slide--alt .feature__info {
+        order: 2;
+    }
+}
+
+#anim1::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    -webkit-animation: 8s frames1 infinite steps(1);
+    animation: 8s frames1 infinite steps(1);
+}
+#anim2 img {
+    -webkit-animation: 8s frames2 infinite alternate ease-in-out;
+    animation: 8s frames2 infinite alternate ease-in-out;
+    margin-bottom: -80%;
+}
+#anim3 img {
+    -webkit-animation: 5s frames3 infinite steps(3);
+    animation: 5s frames3 infinite steps(3);
+    margin-bottom: -90%;
+}
+
+@-webkit-keyframes frames1 {
+    0% {-webkit-transform: translateY(0%)}
+    3% {-webkit-transform: translateY(11%)}
+    6% {-webkit-transform: translateY(21%)}
+    18% {-webkit-transform: translateY(31%)}
+    23% {-webkit-transform: translateY(41%)}
+    30% {-webkit-transform: translateY(51%)}
+    45% {-webkit-transform: translateY(61%)}
+    65% {-webkit-transform: translateY(71%)}
+    70% {-webkit-transform: translateY(100%)}
+}
+@keyframes frames1 {
+    0% {transform: translateY(0)}
+    3% {transform: translateY(11%)}
+    6% {transform: translateY(21%)}
+    18% {transform: translateY(31%)}
+    23% {transform: translateY(41%)}
+    30% {transform: translateY(51%)}
+    45% {transform: translateY(61%)}
+    65% {transform: translateY(71%)}
+    70% {transform: translateY(100%)}
+}
+@-webkit-keyframes frames2 {
+    0%, 30% { -webkit-transform: translateY(0); }
+    70%, 100% { -webkit-transform: translateY(-39.5%)}
+
+}
+@keyframes frames2 {
+    0%, 10% { transform: translateY(0); }
+    90%, 100% { transform: translateY(-25%)}
+
+}
+@-webkit-keyframes frames3 {
+    100% { -webkit-transform: translateY(-100%)}
+}
+
+@keyframes frames3 {
+    100% { transform: translateY(-100%)}
+}
+</style>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Merriweather" media="only ~" onload="if(this.media!=='all')this.media='all';">
+</head>
+
+<body>
+    <div class="slide slide--inv">
+        <div class="slide__content masthead">
+            <h1 class="masthead__title">Google Analytics Debugger</h1>
+            <p class="masthead__strap">A devtools extension for exposing tracking beacon data to developers</p>
+            <img class="masthead__image" src="img/gadebugger-chrome.png">
+            <div class="masthead__action">
+                <a class="button" data-tracking="Download|Chrome 2.0.0" href="https://github.com/keithclark/gadebugger/blob/master/dist/gadebugger-2.0.0.crx?raw=true" download="gadebugger.crx">Download for Chrome</a>
+                <a class="button" data-tracking="Download|Firefox 2.0.0" href="https://github.com/keithclark/gadebugger/blob/master/dist/gadebugger-2.0.0.xpi?raw=true" download="gadebugger.xpi">Download for Firefox</a>
+                <a class="button" data-tracking="Download|Opera 2.0.0" href="https://github.com/keithclark/gadebugger/blob/master/dist/gadebugger-2.0.0.crx?raw=true" download="gadebugger.crx">Download for Opera</a>
+            </div>
+            <p class="small">
+                Want to help? Raise bugs, request features or contribute code on <a href="https://github.com/keithclark/gadebugger">GitHub</a>
+                or donate via <a data-tracking="Donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=QBVAYY8FSCMD6">PayPal</a>.</p>
+        </div>
+    </div>
+
+    <div class="slide slide--alt">
+        <div class="slide__content feature">
+            <div class="feature__info">
+                <h2>Live data capture</h2>
+                <p>Capture tracking beacons for <strong>Traditional</strong> and <strong>Universal</strong>
+                    Analytics properties while you browse.</p>
+                <p>Beacons are automatically grouped by page context, making it easy to identify how tracked
+                    events relate to each other.</p>
+            </div>
+            <div class="feature__image">
+                <div class="animation" id="anim1">
+                    <img src="img/gadebugger-anim-1.png">
+                </div>
+            </div>
+       </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide__content feature">
+            <div class="feature__info">
+                <h2>Beacon inspector</h2>
+                <p>Review meta data for <em>every</em> tracking beacon sent to the Google Analytics
+                    servers with the context sensitive inspector.
+                </p>
+                <ul>
+                    <li>Tracker properties</li>
+                    <li>Client information</li>
+                    <li>Document properties</li>
+                    <li>Page views</li>
+                    <li>Events</li>
+                    <li>E-commerce transactions</li>
+                    <li>User timings</li>
+                    <li>Social interactions</li>
+                    <li>Custom variables</li>
+                    <li>Custom dimensions</li>
+                    <li>Custom metrics</li>
+                    <li>Content groups</li>
+                    <li>Campaign tracking</li>
+                </ul>
+            </div>
+            <div class="feature__image">
+                <div class="animation" id="anim2">
+                    <img src="img/gadebugger-anim-2.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide slide--alt">
+        <div class="slide__content feature">
+            <div class="feature__info">
+                <h2>Multiple tracker Support</h2>
+                <p>Google Analytics supports multiple trackers on a single website, allowing specific
+                    metrics to be captured into different accounts.</p>
+                <p>GA Debugger will capture beacons sent from <em>every</em> tracker on a page, grouping
+                    them together for easy navigation and interrogation.</p>
+            </div>
+            <div class="feature__image">
+                <div class="animation" id="anim3">
+                    <img src="img/gadebugger-anim-3.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide slide--inv footer">
+        <div class="slide__content">
+            <span class="small">Google Analytics Debugger is a <a href="http://keithclark.co.uk/">Keith Clark</a> project.</span>
+        </div>
+    </div>
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10812217-6', 'auto');
+    ga('send', 'pageview');
+
+    if (document.querySelectorAll) {
+        var c, trackables = document.querySelectorAll('[data-tracking]');
+        for (c = 0; c < trackables.length; c++) {
+            trackables[c].addEventListener('click', function (e) {
+                var trackingData = e.target.getAttribute('data-tracking').split('|');
+                ga('send', 'event', trackingData[0], trackingData[1]);
+            });
+        }
+    }
+    </script>
+</body>
+</html>
