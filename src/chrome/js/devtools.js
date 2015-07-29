@@ -13,7 +13,7 @@ chrome.devtools.panels.create('GA Debugger', 'img/icon-48.png', 'index.html', fu
         panel.onShown.removeListener(init);
 
         function requestHandler(request) {
-            panelWindow.GADebugger.process(request.request.url);
+            panelWindow.GADebugger.process(request.request);
         }
 
         captureButton.onClicked.addListener(function() {
