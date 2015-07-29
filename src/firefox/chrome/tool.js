@@ -6,6 +6,7 @@ const STRINGS_URI = 'chrome://gadebugger/locale/strings.properties';
 
 const EVENTS = {
   NETWORK_EVENT: 'networkEvent',
+  NETWORK_EVENT_UPDATE: 'networkEventUpdate',
   BEACONMONITOR_STARTED: 'GADebugger:BeaconMonitorStarted',
   BEACONMONITOR_STOPPED: 'GADebugger:BeaconMonitorStopped',
   BEACONMONITOR_BEACON: 'GADebugger:BeaconMonitorBeacon'
@@ -58,6 +59,7 @@ let BeaconMonitor = {
         });
 
         this._onNetworkEvent = this._onNetworkEvent.bind(this);
+        this._onNetworkEventUpdate = this._onNetworkEventUpdate.bind(this);
     },
     destroy: function() {
         this.client = null;
@@ -65,7 +67,9 @@ let BeaconMonitor = {
     },
     start: function() {
         if (!this.capturing) {
+            this._activeRequests = {};
             this.client.addListener(EVENTS.NETWORK_EVENT, this._onNetworkEvent);
+            this.client.addListener(EVENTS.NETWORK_EVENT_UPDATE, this._onNetworkEventUpdate);
             this._recording = true;
             window.emit(EVENTS.BEACONMONITOR_STARTED);
         }
@@ -73,6 +77,8 @@ let BeaconMonitor = {
     stop: function() {
         if (this.capturing) {
             this.client.removeListener(EVENTS.NETWORK_EVENT, this._onNetworkEvent);
+            this.client.removeListener(EVENTS.NETWORK_EVENT_UPDATE, this._onNetworkEventUpdate);
+            this._activeRequests = {};
             this._recording = false;
             window.emit(EVENTS.BEACONMONITOR_STOPPED);
         }
@@ -80,8 +86,72 @@ let BeaconMonitor = {
     get capturing() {
         return this._recording;
     },
+    /**
+     * The `networkEvent` message type handler.
+     *
+     * Arguments:
+     *   aType     string   Message type
+     *   aPacket   object   The network request information
+     */
     _onNetworkEvent: function(aType, aPacket) {
-        var beacon = GACore.parseBeacon(aPacket.eventActor.url);
+        var eventActor = aPacket.eventActor;
+
+        if (GACore.isBeaconUrl(eventActor.url)) {
+            let request = {
+                method: eventActor.method,
+                url: eventActor.url
+            };
+
+            // if this is a GET request we can log the beacon now
+            if (request.method === 'GET') {
+                this._onNetworkBeaconRequest(request);
+            }
+            // for POST requests we need to wait for the `networkEventUpdate` event
+            else if (request.method === 'POST') {
+                this._activeRequests[eventActor.actor] = request;
+            }
+        }
+    },
+    /**
+     * The `networkEventUpdate` message type handler.
+     *
+     * Arguments:
+     *   aType     string   Message type
+     *   aPacket   object   The network request information
+     */
+    _onNetworkEventUpdate: function(aType, aPacket) {
+        var activeRequest = this._activeRequests[aPacket.from];
+        if (activeRequest) {
+            if (aPacket.updateType === 'requestPostData') {
+                this.webConsoleClient.getRequestPostData(aPacket.from, function (aResponse) {
+                    activeRequest.postData = aResponse.postData.text;
+                    this._onNetworkBeaconRequest(activeRequest);
+                    delete this._activeRequests[aPacket.from];
+                }.bind(this));
+            }
+        }
+    },
+    /**
+     * The `networkBeaconRequest` handler.
+     *
+     * Called when a network request is determined to be a valid
+     * GA beacon.
+     *
+     * Arguments:
+     *   request   object   The request object
+     */
+    _onNetworkBeaconRequest: function(request) {
+        var url = request.url;
+        var beacon;
+
+        // if this is a POST it was either sent using the `xhr`
+        // or `beacon` transport. For these requests we append
+        // the post body to the url as a querystring.
+        if (request.method === 'POST') {
+            url += '?' + request.postData;
+        }
+
+        beacon = GACore.parseBeacon(url);
         if (beacon) {
             window.emit(EVENTS.BEACONMONITOR_BEACON, beacon);
             if (!TrackerListView.hasTracker(beacon.account)) {
