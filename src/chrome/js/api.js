@@ -82,54 +82,63 @@ var GADebuggerAPI = (function() {
     }
 
 
-    function process(url) {
-        var beacon = GACore.parseBeacon(url),
-            tracker, item, refNode;
+    function process(request) {
+        var url = request.url,
+            beacon, tracker, item, refNode;
 
-        if (beacon) {
-            tracker = getTrackerByAccount(beacon.account);
+        if (GACore.isBeaconUrl(url)) {
 
-            // create a tracker list item for this beacon
-            if (!tracker) {
-                tracker = {
-                    account: beacon.account,
-                    list: elements.trackerBeaconList.cloneNode(true)
-                };
-                UI.ItemList.addItem(
-                    elements.trackerList,
-                    tracker.account + '<i>' + beacon.documentHostname + '</i>',
-                    tracker.account,
-                    true
-                );
-                trackerObjects.push(tracker);
+            if (request.method === 'POST') {
+                url += request.queryString.length ? '&' : '?';
+                url += request.postData.text;
             }
 
-            // add the beacon to the trackers beacon list
-            item = UI.ItemList.addItem(
-                tracker.list,
-                beacon.type + ' - ' + GACore.createBeaconHint(beacon),
-                url
-            );
+            beacon = GACore.parseBeacon(url);
 
-            item.className = 'beacon beacon--' + beacon.type;
+            if (beacon) {
+                tracker = getTrackerByAccount(beacon.account);
 
-            // ensure transaction items are grouped
-            if (beacon.type === 'item') {
-                refNode = tracker.list.querySelector('[tid="' + beacon.transactionItem.transactionId + '"]');
-                if (refNode) {
-                    refNode = refNode.nextElementSibling;
+                // create a tracker list item for this beacon
+                if (!tracker) {
+                    tracker = {
+                        account: beacon.account,
+                        list: elements.trackerBeaconList.cloneNode(true)
+                    };
+                    UI.ItemList.addItem(
+                        elements.trackerList,
+                        tracker.account + '<i>' + beacon.documentHostname + '</i>',
+                        tracker.account,
+                        true
+                    );
+                    trackerObjects.push(tracker);
                 }
-                tracker.list.insertBefore(item, refNode);
-                item.setAttribute('tid', beacon.transactionItem.transactionId);
-            }
 
-            // ensure the transaction header is above any transaction items
-            if (beacon.type === 'transaction') {
-                tracker.list.insertBefore(item, tracker.list.querySelector('[tid="' + beacon.transaction.id + '"]'));
+                // add the beacon to the trackers beacon list
+                item = UI.ItemList.addItem(
+                    tracker.list,
+                    beacon.type + ' - ' + GACore.createBeaconHint(beacon),
+                    url
+                );
+
+                item.className = 'beacon beacon--' + beacon.type;
+
+                // ensure transaction items are grouped
+                if (beacon.type === 'item') {
+                    refNode = tracker.list.querySelector('[tid="' + beacon.transactionItem.transactionId + '"]');
+                    if (refNode) {
+                        refNode = refNode.nextElementSibling;
+                    }
+                    tracker.list.insertBefore(item, refNode);
+                    item.setAttribute('tid', beacon.transactionItem.transactionId);
+                }
+
+                // ensure the transaction header is above any transaction items
+                if (beacon.type === 'transaction') {
+                    tracker.list.insertBefore(item, tracker.list.querySelector('[tid="' + beacon.transaction.id + '"]'));
+                }
             }
         }
     }
-
 
     function setProperties(propertyList, props) {
         var group = propertyList.parentNode.parentNode;
