@@ -42,5 +42,26 @@ module.exports = {
             test.strictEqual(beacon, undefined);
             test.done();
         },
+    },
+    'API.isBeaconUrl': {
+        'Universal analytics URL': function (test) {
+            test.strictEqual(GACoreAPI.isBeaconUrl('http://www.google-analytics.com/collect'), true);
+            test.strictEqual(GACoreAPI.isBeaconUrl('https://www.google-analytics.com/collect'), true);
+            test.done();
+        },
+        'Traditional analytics URL': function (test) {
+            test.strictEqual(GACoreAPI.isBeaconUrl('http://www.google-analytics.com/__utm.gif'), true);
+            test.strictEqual(GACoreAPI.isBeaconUrl('https://ssl.google-analytics.com/__utm.gif'), true);
+            test.done();
+        },
+        'Traditional analytics remarketing URL': function (test) {
+            test.strictEqual(GACoreAPI.isBeaconUrl('http://stats.g.doubleclick.net/__utm.gif'), true);
+            test.strictEqual(GACoreAPI.isBeaconUrl('https://stats.g.doubleclick.net/__utm.gif'), true);
+            test.done();
+        },
+        'Non-GA URL': function (test) {
+            test.strictEqual(GACoreAPI.isBeaconUrl('http://my.website.com'), false);
+            test.done();
+        }
     }
 };
