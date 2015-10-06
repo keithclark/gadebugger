@@ -10,6 +10,12 @@ var GACoreAPI = (function() {
         'stats.g.doubleclick.net'
     ];
 
+    function isBeaconUrl(url) {
+        var uri = Utils.parseUri(url);
+        return uri && HOSTS.indexOf(uri.hostname) > -1 &&
+            (uri.path === '/collect' || uri.path === '/__utm.gif');
+    }
+
     function parseBeacon(url) {
         var uri = Utils.parseUri(url),
             beacon;
@@ -45,6 +51,9 @@ var GACoreAPI = (function() {
     }
 
     return {
+        isBeaconUrl: function(url) {
+            return isBeaconUrl(url);
+        },
         parseBeacon: function(url) {
             return parseBeacon(url);
         },

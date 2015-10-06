@@ -42,6 +42,7 @@
     <tr>
         <th>Tracker</th>
         <th>Type</th>
+        <th>Transport</th>
         <th>Data</th>
         <th>URL</th>
     </tr>
@@ -73,7 +74,7 @@
             return out;
         }
 
-        function logRequest(url) {
+        function logRequest(url, transport) {
             var tracker = /__utm.gif?/.test(url) ? "UTM" : "UA",
                 type = (/[?&](?:utm)?t=([^&]*)/.exec(url) || ['','pageview'])[1],
                 title = (/[?&](?:utm)?dt=([^&]*)/.exec(url) || ['', ''])[1],
@@ -82,6 +83,8 @@
             // switch out the current domain for our spoofed one (so test URLs are consistent)
             url = url.replace(new RegExp(encodeURIComponent(document.location.host), "g"), encodeURIComponent(SPOOF_HOST));
             url = url.replace(new RegExp(encodeURIComponent(document.location.pathname), "g"), encodeURIComponent('/'));
+
+            transport = transport || (tracker === 'UA' ? 'image' : '');
 
             // generate the data column value
             if (type === "social") {
@@ -100,12 +103,12 @@
             document.getElementById("results").innerHTML += 
                 "<tr><td>" + tracker + "</td>" +
                 "<td>" + type + "</td>" +
+                "<td>" + transport + "</td>" +
                 "<td>" + decodeURIComponent(data) + "</td>" +
                 "<td>" + url + "</td></tr>";
         }
 
-        var originalImage = window.Image,
-            originalCreateElement = document.createElement,
+        var originalCreateElement = document.createElement,
             stubbedImage = Object.defineProperties({}, {
                 src: {
                     set: function (x) {
@@ -125,6 +128,27 @@
             }
             return elem;
         }
+
+        // Patch XMLHttpRequest to intercept UA XHR transport beacons
+        window.XMLHttpRequest = function() {}
+
+        window.XMLHttpRequest.prototype = {
+            withCredentials: true,
+            setRequestHeader: function() {},
+            open: function(method, url, async) {
+                this._url = url;
+            },
+            send: function(data) {
+                logRequest(this._url + '?' + data, 'xhr');
+            }
+        }
+
+        // Patch navigator.sendBeacon to intercept UA beacon transport beacons
+        navigator.sendBeacon = function(url, data) {
+            logRequest(url + '?' + data, 'beacon');
+            return true;
+        }
+
     }
 }());
 </script>
@@ -144,8 +168,6 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 </script>
-
-
 
 <script>
 /* account creation
@@ -322,6 +344,13 @@ ga('set', 'screenName', 'Screen Name');
 ga('send', 'pageview', '/screen-name-test');
 ga('set', 'screenName', null);
 
+
+/* Transport (UA only)
+------------------------------------------------------- */
+
+ga('send', 'pageview', '/image-transport', {transport: 'image'});
+ga('send', 'pageview', '/beacon-transport', {transport: 'beacon'});
+ga('send', 'pageview', '/xhr-transport', {transport: 'xhr'});
 </script>
 
 </body>
