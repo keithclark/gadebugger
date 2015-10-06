@@ -23,9 +23,7 @@ var GADebuggerAPI = (function() {
             transactionProps: '#transaction-properties',
             transactionItemProps: '#transaction-item-properties',
             socialProps: '#social-properties',
-            rawProps: '#raw-properties',
             contentGroupProps: '#content-group-properties'
-
         };
 
     Object.keys(elements).forEach(function (element) {
