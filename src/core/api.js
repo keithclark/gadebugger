@@ -39,7 +39,7 @@ var GACoreAPI = (function() {
         } else if (beacon.type === 'pageview') {
             hint = beacon.documentPath;
         } else if (beacon.type === 'timing') {
-            hint = beacon.userTimings.category + ' / ' + beacon.userTimings.var + ' / ' + beacon.userTimings.value + 'ms';
+            hint = beacon.userTimings.category + ' / ' + beacon.userTimings.variable + ' / ' + beacon.userTimings.value + 'ms';
         }
         return hint;
     }
