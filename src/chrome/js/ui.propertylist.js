@@ -210,6 +210,8 @@ UI.PropertyList = (function() {
         // convert the value to a string
         if (value !== null && value !== undefined) {
             value = value.toString();
+        } else {
+            value = typeof value;
         }
 
         // update the value if it changed
