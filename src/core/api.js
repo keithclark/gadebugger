@@ -35,17 +35,32 @@ var GACoreAPI = (function() {
         var hint;
 
         if (beacon.type === 'transaction') {
-            hint = beacon.transaction.revenue + ' ' + (beacon.transaction.currency || '');
+            hint = beacon.transaction.revenue.toString();
+            if (beacon.transaction.currency) {
+                hint += ' ' + beacon.transaction.currency;
+            }
         } else if (beacon.type === 'item') {
             hint = beacon.transactionItem.name + ' (x' + beacon.transactionItem.quantity + ')';
         } else if (beacon.type === 'social') {
             hint = beacon.social.network + ' / ' + beacon.social.action;
         } else if (beacon.type === 'event') {
-            hint = beacon.event.category + ' / ' + beacon.event.action;
+            hint = beacon.event.category;
+            if (beacon.event.action) {
+                hint += ' / ' + beacon.event.action;
+            }
+            if (beacon.event.label) {
+                hint += ' / ' + beacon.event.label;
+            }
+            if (beacon.event.value) {
+                hint += ' / ' + beacon.event.value;
+            }
         } else if (beacon.type === 'pageview') {
             hint = beacon.documentPath;
         } else if (beacon.type === 'timing') {
             hint = beacon.userTimings.category + ' / ' + beacon.userTimings.variable + ' / ' + beacon.userTimings.value + 'ms';
+            if (beacon.userTimings.label) {
+                hint += ' / ' + beacon.userTimings.label;
+            }
         }
         return hint;
     }

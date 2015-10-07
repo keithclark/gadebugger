@@ -63,5 +63,128 @@ module.exports = {
             test.strictEqual(GACoreAPI.isBeaconUrl('http://my.website.com'), false);
             test.done();
         }
+    },
+    'API.createBeaconHint': {
+        'Universal analytics': {
+            'Pageview': function (test) {
+                var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=pageview&dl=http%3A%2F%2Fmy.website.com%2Fgadebugger%2Findex.html');
+                test.strictEqual(GACoreAPI.createBeaconHint(beacon), '/gadebugger/index.html');
+                test.done();
+            },
+            'Event': {
+                'With category': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=event&ec=category');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category');
+                    test.done();
+                },
+                'With category and action': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=event&ec=category&ea=action');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / action');
+                    test.done();
+                },
+                'With category, action and label': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=event&ec=category&ea=action&el=label');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / action / label');
+                    test.done();
+                },
+                'With category, action, label and value': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=event&ec=category&ea=action&el=label&ev=1');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / action / label / 1');
+                    test.done();
+                }
+            },
+            'User timing': {
+                'With category, variable and value': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=timing&utc=category&utv=variable&utt=1000');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / variable / 1000ms');
+                    test.done();
+                },
+                'With category, variable, value and label': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=timing&utc=category&utv=variable&utt=1000&utl=label');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / variable / 1000ms / label');
+                    test.done();
+                }
+            },
+            'Social': function (test) {
+                var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=social&sn=network&sa=action&st=target');
+                test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'network / action');
+                test.done();
+            },
+            'Transaction': {
+                'With revenue': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=transaction&tr=123.45');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), '123.45');
+                    test.done();
+                },
+                'With revenue and currency': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=transaction&tr=123.45&cu=GBP');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), '123.45 GBP');
+                    test.done();
+                }
+            },
+            'Item': function (test) {
+                var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/collect?t=item&in=name&iq=1');
+                test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'name (x1)');
+                test.done();
+            }
+        },
+        'Traditional analytics': {
+            'Pageview': function (test) {
+                var beacon = GACoreAPI.parseBeacon("http://www.google-analytics.com/__utm.gif?utmp=%2Fgadebugger%2Findex.html");
+                test.strictEqual(GACoreAPI.createBeaconHint(beacon), '/gadebugger/index.html');
+                test.done();
+            },
+            'Event': {
+                'With category': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=event&utme=5(category)');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category');
+                    test.done();
+                },
+                'With category and action': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=event&utme=5(category*action)');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / action');
+                    test.done();
+                },
+                'With category, action and label': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=event&utme=5(category*action*label)');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / action / label');
+                    test.done();
+                },
+                'With category, action, label and value': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=event&utme=5(category*action*label)(1)');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / action / label / 1');
+                    test.done();
+                }
+            },
+            'User timing': {
+                'With category, variable and value': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=event&utme=14(90!variable*category*1230)(90!1234)');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / variable / 1234ms');
+                    test.done();
+                },
+                'With category, variable, value and label': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=event&utme=14(90!variable*category*1230*label)(90!1234)');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'category / variable / 1234ms / label');
+                    test.done();
+                }
+            },
+            'Social': function (test) {
+                var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=social&utmsn=network&utmsa=action&utmsid=target');
+                test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'network / action');
+                test.done();
+            },
+            'Transaction': {
+                'With revenue': function (test) {
+                    var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=tran&&utmtto=123.45');
+                    test.strictEqual(GACoreAPI.createBeaconHint(beacon), '123.45');
+                    test.done();
+                }
+            },
+            'Item': function (test) {
+                var beacon = GACoreAPI.parseBeacon('http://www.google-analytics.com/__utm.gif?utmt=item&utmipn=name&utmiqt=1');
+                test.strictEqual(GACoreAPI.createBeaconHint(beacon), 'name (x1)');
+                test.done();
+            }
+        }
     }
 };
