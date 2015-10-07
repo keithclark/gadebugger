@@ -48,5 +48,25 @@ module.exports = {
         test.strictEqual(beacon.contentGroups[4], "Content Group 4");
         test.strictEqual(beacon.contentGroups[5], "Content Group 5");
         test.done();
+    },
+    'User Timings': {
+        'with category, var and value': function (test) {
+            var beacon = new UtmBeacon('http://www.google-analytics.com/__utm.gif?utmwv=5.6.7&utms=13&utmn=617760573&utmhn=10.0.0.8&utmt=event&utme=14(90!Var*Category*1230)(90!1234)&utmcs=UTF-8&utmsr=1440x900&utmvp=1438x474&utmsc=24-bit&utmul=en-us&utmje=1&utmfl=19.0%20r0&utmdt=Google%20Analytics%20Test%20Page&utmhid=2131029259&utmr=0&utmp=%2F&utmht=1444206336631&utmac=UA-AAAA-B&utmcc=__utma%3D196898604.1628777192.1444173499.1444173499.1444206337.2%3B%2B__utmz%3D196898604.1444173499.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B&utmjid=&utmu=6ACLAAAAAAAAAAAAAEAAQAAE~');
+            test.strictEqual(beacon.type, 'timing');
+            test.strictEqual(beacon.userTimings.category, 'Category');
+            test.strictEqual(beacon.userTimings.variable, 'Var');
+            test.strictEqual(beacon.userTimings.value, 1234);
+            test.strictEqual(beacon.userTimings.label, undefined);
+            test.done();
+        },
+        'with category, var, value and label': function (test) {
+            var beacon = new UtmBeacon('http://www.google-analytics.com/__utm.gif?utmwv=5.6.7&utms=14&utmn=1078482289&utmhn=10.0.0.8&utmt=event&utme=14(90!Var*Category*1230*Label)(90!1234)&utmcs=UTF-8&utmsr=1440x900&utmvp=1438x474&utmsc=24-bit&utmul=en-us&utmje=1&utmfl=19.0%20r0&utmdt=Google%20Analytics%20Test%20Page&utmhid=2131029259&utmr=0&utmp=%2F&utmht=1444206336638&utmac=UA-AAAA-B&utmcc=__utma%3D196898604.1628777192.1444173499.1444173499.1444206337.2%3B%2B__utmz%3D196898604.1444173499.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B&utmjid=&utmu=6ACLAAAAAAAAAAAAAEAAQAAE~');
+            test.strictEqual(beacon.type, 'timing');
+            test.strictEqual(beacon.userTimings.category, 'Category');
+            test.strictEqual(beacon.userTimings.variable, 'Var');
+            test.strictEqual(beacon.userTimings.value, 1234);
+            test.strictEqual(beacon.userTimings.label, 'Label');
+            test.done();
+        }
     }
 }

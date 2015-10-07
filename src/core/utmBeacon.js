@@ -11,7 +11,7 @@ var UtmBeacon = (function() {
         RE_EXTENSIBLE_DATA = /(\d+)\((.*?)\)(?=\d|$)/g,
         RE_CONTENT_GROUP = /(\d):([^,]+)/g;
 
-    function parseVariableData (data, slots, property, convertor) {
+    function parseVariableData(data, slots, property, convertor) {
         var slot = 0;
         data.split('*').forEach(function (key) {
             var parts = key.split('!');
@@ -34,8 +34,8 @@ var UtmBeacon = (function() {
         });
     }
 
-    function unescapeValue (val) {
-        return val.replace(/'([0-3])/, function(m,i) {
+    function unescapeValue(val) {
+        return val.replace(/'([0-3])/, function (m, i) {
             return '\')*!'.charAt(i | 0);
         });
     }
@@ -52,7 +52,7 @@ var UtmBeacon = (function() {
     };
 
 
-    function UtmBeacon (url) {
+    function UtmBeacon(url) {
         this.params = Utils.parseDataToObject(RE_PIXEL_PARAMS, url);
     }
 
@@ -86,6 +86,11 @@ var UtmBeacon = (function() {
         },
         type: {
             get: function() {
+                if (this.params.utmt === 'event') {
+                    if (Utils.parseDataToObject(RE_EXTENSIBLE_DATA, this.params.utme)[14]) {
+                        return 'timing';
+                    }
+                }
                 if (this.params.utmt === 'tran') {
                     return 'transaction';
                 }
@@ -264,19 +269,25 @@ var UtmBeacon = (function() {
                 }
             }
         },
-        timingData: {
+        userTimings: {
             get: function() {
-                var data;
-                if (this.type === 'event') {
+                var data, obj = {};
+                if (this.type === 'timing') {
                     data = Utils.parseDataToObject(RE_EXTENSIBLE_DATA, this.params.utme)[14];
                     if (data) {
                         data = data.split(/[!|\*|\)\(]/).map(unescapeValue);
-                        return {
-                            category: data[2],
-                            variable: data[1],
-                            time: parseFloat(data[3]),
-                            label: data[4]
-                        };
+                        obj.variable = data[1];
+                        obj.category = data[2];
+
+                        if (data.length === 8) {
+                            // timing has a label
+                            obj.label = data[4];
+                            obj.value = parseInt(data[7], 10);
+                        } else {
+                            // timing doesn't have a label
+                            obj.value = parseInt(data[6], 10);
+                        }
+                        return obj;
                     }
                 }
             }

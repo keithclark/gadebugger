@@ -266,6 +266,9 @@ _gaq.push(['_trackTrans']);
 /* User Timings
 ------------------------------------------------------- */
 
+_gaq.push(['_trackTiming', 'Category', 'Var', 1234, null, 100]);
+_gaq.push(['_trackTiming', 'Category', 'Var', 1234, 'Label', 100]);
+
 ga('send', 'timing', 'Category', 'Var', 1234);
 ga('send', 'timing', 'Category', 'Var', 1234, 'Label');
 
