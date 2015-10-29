@@ -28,7 +28,7 @@ function startup(toolbox, target) {
     TrackerListView.initialize();
     TrackerBeaconsView.initialize();
     BeaconPropertiesView.initialize();
-    ToolbarView.initialize();
+    ToolbarView.initialize(target.client);
     BeaconMonitor.initialize(target.client, target.form);
     return promise.resolve();
 }
@@ -164,15 +164,18 @@ let BeaconMonitor = {
 };
 
 let ToolbarView = {
-    initialize: function() {
+    initialize: function(client) {
         this._captureToggleButton = $('#capture-button');
         this._clearButton = $('#clear-button');
+        this._preserveLogCheckbox = $('#preserve-log');
 
         this._captureToggleButton.setAttribute('label', L10N.getStr('startLabel'));
         this._clearButton.setAttribute('label', L10N.getStr('clearLabel'));
+        this._preserveLogCheckbox.setAttribute('label', L10N.getStr('preserveLogLabel'));
 
         this._onCaptureTogglePressed = this._onCaptureTogglePressed.bind(this);
         this._onClearPressed = this._onClearPressed.bind(this);
+        this._onTabNavigated = this._onTabNavigated.bind(this);
 
         this._captureToggleButton.addEventListener('click', this._onCaptureTogglePressed, false);
         this._clearButton.addEventListener('click', this._onClearPressed, false);
@@ -180,11 +183,18 @@ let ToolbarView = {
         window.on(EVENTS.BEACONMONITOR_STARTED, this._onBeaconMonitorStart.bind(this));
         window.on(EVENTS.BEACONMONITOR_STOPPED, this._onBeaconMonitorStop.bind(this));
 
+        client.addListener('tabNavigated', this._onTabNavigated);
+
         this._onBeaconMonitorStop();
     },
     destroy: function() {
-        this._captureToggleButton.removeEventListener("click", this._onCaptureTogglePressed, false);
-        this._clearButton.removeEventListener("click", this._onClearPressed, false);
+        this._captureToggleButton.removeEventListener('click', this._onCaptureTogglePressed, false);
+        this._clearButton.removeEventListener('click', this._onClearPressed, false);
+    },
+    _onTabNavigated: function(aEvent, aPacket) {
+        if (aPacket.state === 'start' && !this._preserveLogCheckbox.checked) {
+            this._onClearPressed();
+        }
     },
     _onCaptureTogglePressed: function() {
         if (BeaconMonitor.capturing) {
