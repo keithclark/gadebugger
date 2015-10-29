@@ -102,3 +102,9 @@
 .property--collapsed + .property-list {
     display: none;
 }
+
+@media (-webkit-min-device-pixel-ratio: 1.5) {
+    .property__opener {
+        -webkit-mask-image: url(../img/glyphs-x2.png);
+    }
+}

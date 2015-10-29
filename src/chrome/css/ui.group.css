@@ -43,3 +43,9 @@
 .group--collapsed .group__body {
     display: none;
 }   
+
+@media (-webkit-min-device-pixel-ratio: 1) {
+    .group__header:before {
+        -webkit-mask-image: url(../img/glyphs-x2.png);
+    }
+}
