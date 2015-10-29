@@ -1,0 +1,73 @@
+.toolbar {
+    -webkit-user-select: none;
+    border-bottom: 1px solid #dadada;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    padding: 0 2px;
+}
+.toolbar input,
+.toolbar button {
+    font: inherit;
+    outline: none;
+}
+.toolbar__item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    color: #5a5a5a;
+}
+
+/* labels
+--------------------------------------------------- */
+
+.toolbar__label {
+    margin-left: 5px;
+    margin-right: 3px;
+    color: #888;
+}
+
+
+/* buttons
+--------------------------------------------------- */
+
+.toolbar__button {
+    width: 28px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+}
+.toolbar__button .glyph {
+    margin-left: -3px;
+}
+.toolbar__button .glyph:hover {
+    background-color: #333;
+}
+.toolbar__button--toggled-on .glyph {
+    background-color: rgb(66, 129, 235) !important;
+}
+.toolbar__button--toggled-on .glyph--record {
+    -webkit-mask-position: -32px 0px;
+    background-color: rgb(216, 0, 0) !important;
+}
+
+
+/* checkbox
+--------------------------------------------------- */
+
+.toolbar__checkbox {
+    padding: 0 5px 0 2px;
+}
+
+
+/* divider
+--------------------------------------------------- */
+
+.toolbar__divider {
+    background-color: #ccc;
+    width: 1px;
+    margin: 2px 4px;
+    height: 17px;
+}

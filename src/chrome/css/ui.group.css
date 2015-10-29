@@ -9,8 +9,8 @@
 .group__header {
     background: rgb(240, 240, 240);
     padding: 0 5px;
-    border-top: 1px solid rgb(189, 189, 189);
-    border-bottom: 1px solid rgb(189, 189, 189);
+    border-top: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
     line-height: 18px;
     margin-bottom: -1px;        /* [1] */
     -webkit-user-select: none;  /* [2] */

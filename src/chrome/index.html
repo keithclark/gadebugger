@@ -4,6 +4,18 @@
     <link rel="stylesheet" href="css/all.css">
 </head>
 <body>
+    <div class="toolbar" data-ui-type="toolbar">
+        <button class="toolbar__item toolbar__button toolbar__button--toggled-off" id="capture-button">
+            <div class="glyph glyph--record">Start</div>
+        </button>
+        <button class="toolbar__item toolbar__button" id="clear-button">
+            <div class="glyph glyph--clear">Clear</div>
+        </button>
+        <div class="toolbar__item toolbar__divider"></div>
+        <label class="toolbar__item toolbar__checkbox">
+            <input type="checkbox" id="preserve-log" checked>Preserve log
+        </label>
+    </div>
     <div class="splitview">
         <div id="tracker-list" class="sidebar splitview__panel">
             <div class="sidebar__title">Trackers</div>

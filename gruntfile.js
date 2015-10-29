@@ -26,14 +26,17 @@ module.exports = function(grunt) {
             'src/chrome/js/ui.propertylist.js',
             'src/chrome/js/ui.splitview.js',
             'src/chrome/js/ui.group.js',
+            'src/chrome/js/ui.toolbar.js',
             'src/chrome/js/outro.js'
         ],
         chromeStylesheets: [
+            'src/chrome/css/ui.glyph.css',
             'src/chrome/css/ui.window.css',
             'src/chrome/css/ui.splitview.css',
             'src/chrome/css/ui.group.css',
             'src/chrome/css/ui.propertylist.css',
             'src/chrome/css/ui.itemlist.css',
+            'src/chrome/css/ui.toolbar.css',
             'src/chrome/css/gadebugger.css'
         ],
         firefox: [

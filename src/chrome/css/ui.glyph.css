@@ -1,0 +1,15 @@
+.glyph {
+    -webkit-mask-image: url(../img/glyphs.png);
+    -webkit-mask-size: 90px 24px;
+    background-color: #5a5a5a;
+    z-index: 1;
+    width: 32px;
+    height: 24px;
+    font-size: 0;
+}
+.glyph--clear {
+    -webkit-mask-position: -64px 0;
+}
+.glyph--record {
+    -webkit-mask-position: 0px 0px;
+}

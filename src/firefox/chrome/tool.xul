@@ -11,19 +11,24 @@
   <script src="tool.js" />
   <script src="core.js" />
 
-  <box id="content" flex="1">
-    <vbox width="220">
-      <toolbar class="devtools-toolbar">
-        <toolbarbutton id="capture-button" class="devtools-toolbarbutton" />
-        <toolbarbutton id="clear-button" class="devtools-toolbarbutton" />
+  <vbox id="content" flex="1">
+    <box>
+      <toolbar class="devtools-toolbar" flex="1">
+        <hbox class="devtools-toolbarbutton-group">
+          <toolbarbutton id="capture-button" class="devtools-toolbarbutton" />
+          <toolbarbutton id="clear-button" class="devtools-toolbarbutton" />
+        </hbox>
+        <checkbox id="preserve-log" checked="true" />
       </toolbar>
-      <vbox id="trackers-list" flex="1"/>
-    </vbox>
-    <splitter class="devtools-side-splitter"/>
-    <box id="tracker-beacons" class="zebra-striped" flex="1"/>
-    <splitter id="editors-splitter" class="devtools-side-splitter"/>
-    <vbox width="320" id="beacon-properties" class="theme-sidebar">
-      <vbox id="all-headers" flex="1" />
-    </vbox>
-  </box>
+    </box>
+    <box flex="1">
+      <vbox id="trackers-list" width="220" />
+      <splitter class="devtools-side-splitter" />
+      <vbox id="tracker-beacons" class="zebra-striped" flex="1" />
+      <splitter id="editors-splitter" class="devtools-side-splitter" />
+      <vbox width="320" id="beacon-properties" class="theme-sidebar">
+        <vbox id="all-headers" flex="1" />
+      </vbox>
+    </box>
+  </vbox>
 </window>
