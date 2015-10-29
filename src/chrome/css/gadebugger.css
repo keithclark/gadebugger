@@ -44,6 +44,10 @@
     background-image: url(../img/beacon-social.png);
 }
 
+.beacon--timing {
+    background-image: url(../img/beacon-usertiming.png);
+}
+
 .beacon--item {
     background-image: url(../img/beacon-transactionitem.png);
     background-position: 30px 50%;

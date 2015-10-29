@@ -51,6 +51,10 @@
     background-image: url(beacon-transaction.png);
 }
 
+.beacon--timing {
+    background-image: url(beacon-usertiming.png);
+}
+
 .beacon--item {
     background-image: url(beacon-transactionitem.png);
     background-position: 25px 50%;
