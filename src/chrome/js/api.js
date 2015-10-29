@@ -1,4 +1,4 @@
-/* global GACore, UI */
+/* global GACore, UI, chrome */
 /* exported GADebuggerAPI */
 
 var GADebuggerAPI = (function() {
@@ -6,6 +6,7 @@ var GADebuggerAPI = (function() {
     'use strict';
 
     var trackerObjects = [],
+        capturing = false,
         elements = {
             beaconPanel: '#tracker-data',
             propsPanel: '#beacon-props',
@@ -23,7 +24,10 @@ var GADebuggerAPI = (function() {
             transactionProps: '#transaction-properties',
             transactionItemProps: '#transaction-item-properties',
             socialProps: '#social-properties',
-            contentGroupProps: '#content-group-properties'
+            contentGroupProps: '#content-group-properties',
+            captureButton: '#capture-button',
+            clearButton: '#clear-button',
+            preserveLog: '#preserve-log',
         };
 
     Object.keys(elements).forEach(function (element) {
@@ -33,6 +37,26 @@ var GADebuggerAPI = (function() {
     elements.beaconPanel.removeChild(elements.trackerBeaconList);
     elements.propsPanel.style.display = 'none';
 
+    elements.clearButton.addEventListener('click', clearTrackers);
+
+    elements.captureButton.addEventListener('toggle', function (e) {
+        capturing = e.detail;
+        if (capturing) {
+            chrome.devtools.network.onRequestFinished.addListener(requestHandler);
+        } else {
+            chrome.devtools.network.onRequestFinished.removeListener(requestHandler);
+        }
+    });
+
+    chrome.devtools.network.onNavigated.addListener(function() {
+        if (!elements.preserveLog.checked) {
+            clearTrackers();
+        }
+    });
+
+    function requestHandler(request) {
+        process(request.request);
+    }
 
     document.addEventListener('change', function (e) {
         var selectedTracker, tracker, beacon, beaconPanel;
@@ -241,7 +265,6 @@ var GADebuggerAPI = (function() {
         setProperties(elements.contentGroupProps, beacon.contentGroups);
         setProperties(elements.campaignProps, beacon.campaignData);
     }
-
 
     return {
         process: function(url) {
