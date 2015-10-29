@@ -90,13 +90,14 @@
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-image: url("../img/ui.opener-open.png");
-    background-repeat: no-repeat;
-    background-position: 1px 1px;
+    background-color: #888;
+    -webkit-mask-image: url(../img/glyphs.png);
+    -webkit-mask-size: 160px 24px;
+    -webkit-mask-position: -140px -7px;
     -webkit-user-select: none;  /* [1] */
 }
 .property--collapsed .property__opener {
-    background-image: url("../img/ui.opener-closed.png");
+    -webkit-mask-position: -108px -7px;
 }
 .property--collapsed + .property-list {
     display: none;

@@ -110,7 +110,8 @@ body > .splitview {
     border-bottom: 1px solid #dadada;
     white-space: nowrap;
     overflow-x: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
+    line-height: 15px;
 }
 
 #tracker-data .beacon {
