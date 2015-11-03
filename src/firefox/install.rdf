@@ -5,7 +5,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>gadebugger@browserextensions.keithclark.co.uk</em:id>
     <em:version><%= pkg.version %></em:version>
-    <em:name><%= pkg.name %></em:name>
+    <em:name><%= pkg.gadebuggerMeta.title %></em:name>
     <em:description><%= pkg.description %></em:description>
     <em:creator><%= pkg.author.name %></em:creator>
     <em:homepageURL><%= pkg.homepage %></em:homepageURL>

@@ -1,5 +1,5 @@
 {
-  "name": "GADebugger",
+  "name": "gadebugger",
   "description": "A browser extension for debugging Google Analytics tracking code",
   "version": "2.0.0",
   "homepage": "http://github.com/keithclark/gadebugger",
@@ -19,5 +19,8 @@
     "grunt-contrib-nodeunit": "~0.3.3",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-compress": "~0.12.0"
+  },
+  "gadebuggerMeta": {
+    "title": "Google Analytics Debugger"
   }
 }

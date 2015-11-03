@@ -1,5 +1,5 @@
 {
-    "name": "<%= pkg.name %>",
+    "name": "<%= pkg.gadebuggerMeta.title %>",
     "description":  "<%= pkg.description %>",
     "version": "<%= pkg.version %>",
     "author": "<%= pkg.author.name %>",
