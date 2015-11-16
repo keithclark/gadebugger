@@ -15,11 +15,17 @@ const EVENTS = {
 const RE_ALPHA_CHARS = /[^a-z]/gi;
 const RE_NUMBERIC_CHARS = /[^0-9.]/g;
 
-
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
-Cu.import('resource:///modules/devtools/SideMenuWidget.jsm');
-Cu.import('resource:///modules/devtools/ViewHelpers.jsm');
-Cu.import('resource:///modules/devtools/VariablesView.jsm');
+Cu.import('chrome://gadebugger/content/resourceHelpers.jsm')
+
+ResourceHelpers.importModule('resource://devtools/client/shared/widgets/SideMenuWidget.jsm', this);
+ResourceHelpers.importModule('resource://devtools/client/shared/widgets/ViewHelpers.jsm', this);
+ResourceHelpers.importModule('resource://devtools/client/shared/widgets/VariablesView.jsm', this);
+
+ResourceHelpers.insertStyleSheet('chrome://devtools/skin/common.css', document);
+ResourceHelpers.insertStyleSheet('chrome://devtools/skin/splitview.css', document);
+ResourceHelpers.insertStyleSheet('chrome://devtools/skin/widgets.css', document);
+ResourceHelpers.insertStyleSheet('chrome://devtools/content/shared/widgets/widgets.css', document);
 
 XPCOMUtils.defineLazyModuleGetter(this, 'EventEmitter', 'resource://gre/modules/devtools/event-emitter.js');
 XPCOMUtils.defineLazyModuleGetter(this, 'promise', 'resource://gre/modules/commonjs/sdk/core/promise.js', 'Promise');
