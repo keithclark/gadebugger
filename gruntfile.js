@@ -240,36 +240,70 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', 'Builds the GA Debugger extensions', function() {
         var exec = require('child_process').exec,
             fs = require('fs'),
-            done = grunt.task.current.async();
+            done = grunt.task.current.async(),
+            builds = 3;
+
+        function packageDone(err) {
+            builds--;
+            if (!builds || err) {
+                done(err);
+            }
+        }
 
         fs.exists('build/firefox', function (exists) {
             if (exists) {
+                grunt.log.writeln('Building Firefox extension');
                 grunt.task.run('compress:firefox');
+                packageDone();
             }
         });
 
         fs.exists('build/chrome', function (exists) {
             if (exists) {
-                grunt.log.writeln('Building Chrome extension')
+                grunt.log.writeln('Building Chrome extension');
                 exec('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --pack-extension=build/chrome --pack-extension-key=chrome.pem', {}, function (err) {
                     if (err) {
                         grunt.log.error(err);
-                        done(err);
+                        packageDone(err);
                     } else {
                         fs.rename('build/chrome.crx', 'dist/gadebugger-' + grunt.config('pkg.version') + '.crx', function (err) {
                             if (err) {
                                 grunt.log.error(err);
                             } else {
-                                grunt.log.ok('Ok');
+                                grunt.log.ok('Built Chrome extension');
                             }
-                            done(err)
+                            packageDone(err);
                         });
                     }
                 });
             } else {
-                done();
+                packageDone();
             }
         });
+
+        fs.exists('build/chrome', function (exists) {
+            if (exists) {
+                grunt.log.writeln('Building Opera extension');
+                exec('/Applications/Opera.app/Contents/MacOS/Opera --pack-extension=build/chrome --pack-extension-key=opera.pem', {}, function (err) {
+                    if (err) {
+                        grunt.log.error(err);
+                        packageDone(err);
+                    } else {
+                        fs.rename('build/chrome.nex', 'dist/gadebugger-' + grunt.config('pkg.version') + '.nex', function (err) {
+                            if (err) {
+                                grunt.log.error(err);
+                            } else {
+                                grunt.log.ok('Built Opera extension');
+                            }
+                            packageDone(err);
+                        });
+                    }
+                });
+            } else {
+                packageDone();
+            }
+        });
+
     });
 
     grunt.registerTask('default', 'Builds everything and watches for changes', ['core', 'chrome', 'firefox', 'watch']);
