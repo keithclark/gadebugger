@@ -2,7 +2,7 @@
 
 ![Google Analytics Debugger in Chrome (above) and Firefox (below)](screengrab.png)
 
-Google Analytics Debugger is a devtools extension for Chrome and Firefox that exposes tracking beacon data to developers so they can test their analytics implementations. The extension will capture tracking beacons from Classic/Traditional Analytics and Universal Analytics.
+Google Analytics Debugger is a devtools extension for Chrome, Firefox and Opera that exposes tracking beacon data to developers so they can test their analytics implementations. The extension will capture tracking beacons from Classic/Traditional Analytics and Universal Analytics.
 
 Google Analytics Debugger will log the following interactions and data:
 
@@ -57,6 +57,10 @@ If you modify the core or chrome source code you'll need to rebuild the extensio
 First, make sure you've built the Firefox add-on. Browse to your Firefox profile, find the extensions folder and create a new text file named `gadebugger@browserextensions.keithclark.co.uk`, paste the path to the Firefox build directoy and restart firefox.
 
 If you modify the core or add-on source code you'll need to rebuild the extension (the watch task will do this for you) and then restart devtools to see your changes.
+
+### Opera
+
+To install the extension in Opera, follow the steps above for Chrome.
 
 
 ## Building distributable extensions
