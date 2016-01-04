@@ -238,7 +238,18 @@ module.exports = function(grunt) {
     grunt.registerTask('core', 'Builds the shared Google Analytics Core scripts.', ['jshint:core', 'nodeunit:core', 'concat:core']);
     grunt.registerTask('chrome', 'Builds the GA Debugger extension for Google Chrome.', ['jshint:chrome', 'concat:chromeJS', 'concat:chromeCSS', 'copy:chrome']);
     grunt.registerTask('firefox', 'Builds the GA Debugger extension for Firefox.', ['concat:firefoxJS', 'copy:firefox']);
-    grunt.registerTask('dist', 'Builds the GA Debugger extensions', function() {
+    grunt.registerTask('build', 'Builds the GA Debugger extension for all browsers', ['core', 'chrome', 'firefox']);
+    grunt.registerTask('dist', 'Builds a fresh set of distributable extension files', ['clean', 'build', 'package']);
+    grunt.registerTask('default', 'Builds everything and watches for changes', ['build', 'watch']);
+
+    grunt.registerTask('clean', 'Empties/creates the `build` and `dist` directories', function() {
+        grunt.file.delete('build');
+        grunt.file.delete('dist');
+        grunt.file.mkdir('build');
+        grunt.file.mkdir('dist');
+    });
+
+    grunt.registerTask('package', 'Package the builds into installable extensions', function() {
         var exec = require('child_process').exec,
             fs = require('fs'),
             done = grunt.task.current.async(),
@@ -306,7 +317,4 @@ module.exports = function(grunt) {
         });
 
     });
-
-    grunt.registerTask('default', 'Builds everything and watches for changes', ['core', 'chrome', 'firefox', 'watch']);
-
 };
