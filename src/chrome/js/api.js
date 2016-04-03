@@ -55,7 +55,9 @@ var GADebuggerAPI = (function() {
     });
 
     function requestHandler(request) {
-        process(request.request);
+        if (request.response.status === 200) {
+            process(request.request);
+        }
     }
 
     document.addEventListener('change', function (e) {
