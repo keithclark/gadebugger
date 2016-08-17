@@ -175,8 +175,15 @@ let ToolbarView = {
         this._clearButton = $('#clear-button');
         this._preserveLogCheckbox = $('#preserve-log');
 
-        this._captureToggleButton.setAttribute('label', L10N.getStr('startLabel'));
-        this._clearButton.setAttribute('label', L10N.getStr('clearLabel'));
+        // Prior to v48, use buttons text labels instead of icons. Altough pre-48
+        // supported icons, the icon colouring requirements were different
+        if (appVersion < 50) {
+            this._captureToggleButton.classList.remove('record-button');
+            this._clearButton.classList.remove('devtools-clear-icon');
+            this._clearButton.setAttribute('label', L10N.getStr('clearLabel'));
+       }
+
+        this._clearButton.setAttribute('tooltiptext', L10N.getStr('clearTooltip'));
         this._preserveLogCheckbox.setAttribute('label', L10N.getStr('preserveLogLabel'));
 
         this._onCaptureTogglePressed = this._onCaptureTogglePressed.bind(this);
@@ -215,12 +222,18 @@ let ToolbarView = {
         BeaconPropertiesView.hide();
     },
     _onBeaconMonitorStart: function() {
-        let label = L10N.getStr('stopLabel');
-        this._captureToggleButton.setAttribute('label', label);
+        if (appVersion < 50) {
+            this._captureToggleButton.setAttribute('label', L10N.getStr('stopLabel'));
+        }
+        this._captureToggleButton.setAttribute('tooltiptext', L10N.getStr('stopTooltip'));
+        this._captureToggleButton.setAttribute('checked', 'true');
     },
     _onBeaconMonitorStop: function() {
-        let label = L10N.getStr('startLabel');
-        this._captureToggleButton.setAttribute('label', label);
+        if (appVersion < 50) {
+            this._captureToggleButton.setAttribute('label', L10N.getStr('startLabel'));
+        }
+        this._captureToggleButton.setAttribute('tooltiptext', L10N.getStr('startTooltip'));
+        this._captureToggleButton.removeAttribute('checked');
     }
 };
 

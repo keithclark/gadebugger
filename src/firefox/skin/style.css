@@ -72,3 +72,20 @@
     background-position: 45px 50%;
     padding-left: 60px;
 }
+
+.record-button {
+  list-style-image: url(icon-record.svg);
+}
+
+#trackers-list {
+    min-width: 150px;
+}
+#tracker-beacons {
+    min-width: 300px;
+}
+#beacon-properties {
+    min-width: 300px;
+}
+#preserve-log {
+    margin-left: .75em;
+}
