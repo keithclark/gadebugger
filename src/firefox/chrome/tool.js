@@ -15,20 +15,20 @@ const EVENTS = {
 const RE_ALPHA_CHARS = /[^a-z]/gi;
 const RE_NUMBERIC_CHARS = /[^0-9.]/g;
 
-Cu.import('resource://gre/modules/XPCOMUtils.jsm');
-Cu.import('chrome://gadebugger/content/resourceHelpers.jsm')
+Cu.import('chrome://gadebugger/content/resourceLoader.js');
 
-ResourceHelpers.importModule('resource://devtools/client/shared/widgets/SideMenuWidget.jsm', this);
-ResourceHelpers.importModule('resource://devtools/client/shared/widgets/ViewHelpers.jsm', this);
-ResourceHelpers.importModule('resource://devtools/client/shared/widgets/VariablesView.jsm', this);
+const appVersion = ResourceLoader.getAppMajorVersion();
+const {Heritage, WidgetMethods, ViewHelpers} = ResourceLoader.require('devtools/client/shared/widgets/view-helpers');
+const {SideMenuWidget} = ResourceLoader.require('resource://devtools/client/shared/widgets/SideMenuWidget.jsm');
+const {VariablesView} = ResourceLoader.require('resource://devtools/client/shared/widgets/VariablesView.jsm');
+const {LocalizationHelper} = ResourceLoader.require('devtools/client/shared/l10n');
+const EventEmitter = ResourceLoader.require('devtools/shared/event-emitter');
+const promise = ResourceLoader.require('promise');
 
-ResourceHelpers.insertStyleSheet('chrome://devtools/skin/common.css', document);
-ResourceHelpers.insertStyleSheet('chrome://devtools/skin/splitview.css', document);
-ResourceHelpers.insertStyleSheet('chrome://devtools/skin/widgets.css', document);
-ResourceHelpers.insertStyleSheet('chrome://devtools/content/shared/widgets/widgets.css', document);
-
-XPCOMUtils.defineLazyModuleGetter(this, 'EventEmitter', 'resource://gre/modules/devtools/event-emitter.js');
-XPCOMUtils.defineLazyModuleGetter(this, 'promise', 'resource://gre/modules/commonjs/sdk/core/promise.js', 'Promise');
+ResourceLoader.loadStyleSheet('chrome://devtools/skin/common.css', document);
+ResourceLoader.loadStyleSheet('chrome://devtools/skin/splitview.css', document);
+ResourceLoader.loadStyleSheet('chrome://devtools/skin/widgets.css', document);
+ResourceLoader.loadStyleSheet('chrome://devtools/content/shared/widgets/widgets.css', document);
 
 function startup(toolbox, target) {
     TrackerListView.initialize();
@@ -175,8 +175,15 @@ let ToolbarView = {
         this._clearButton = $('#clear-button');
         this._preserveLogCheckbox = $('#preserve-log');
 
-        this._captureToggleButton.setAttribute('label', L10N.getStr('startLabel'));
-        this._clearButton.setAttribute('label', L10N.getStr('clearLabel'));
+        // Prior to v48, use buttons text labels instead of icons. Altough pre-48
+        // supported icons, the icon colouring requirements were different
+        if (appVersion < 50) {
+            this._captureToggleButton.classList.remove('record-button');
+            this._clearButton.classList.remove('devtools-clear-icon');
+            this._clearButton.setAttribute('label', L10N.getStr('clearLabel'));
+       }
+
+        this._clearButton.setAttribute('tooltiptext', L10N.getStr('clearTooltip'));
         this._preserveLogCheckbox.setAttribute('label', L10N.getStr('preserveLogLabel'));
 
         this._onCaptureTogglePressed = this._onCaptureTogglePressed.bind(this);
@@ -215,12 +222,18 @@ let ToolbarView = {
         BeaconPropertiesView.hide();
     },
     _onBeaconMonitorStart: function() {
-        let label = L10N.getStr('stopLabel');
-        this._captureToggleButton.setAttribute('label', label);
+        if (appVersion < 50) {
+            this._captureToggleButton.setAttribute('label', L10N.getStr('stopLabel'));
+        }
+        this._captureToggleButton.setAttribute('tooltiptext', L10N.getStr('stopTooltip'));
+        this._captureToggleButton.setAttribute('checked', 'true');
     },
     _onBeaconMonitorStop: function() {
-        let label = L10N.getStr('startLabel');
-        this._captureToggleButton.setAttribute('label', label);
+        if (appVersion < 50) {
+            this._captureToggleButton.setAttribute('label', L10N.getStr('startLabel'));
+        }
+        this._captureToggleButton.setAttribute('tooltiptext', L10N.getStr('startTooltip'));
+        this._captureToggleButton.removeAttribute('checked');
     }
 };
 
@@ -562,7 +575,7 @@ let BeaconPropertiesView = {
 /**
  * Localization convenience methods.
  */
-let L10N = new ViewHelpers.L10N(STRINGS_URI);
+let L10N = new LocalizationHelper(STRINGS_URI);
 
 /**
  * Convenient way of emitting events from the panel window.
@@ -572,4 +585,6 @@ EventEmitter.decorate(this);
 /**
  * DOM query helper.
  */
-function $(selector, target = document) target.querySelector(selector)
+function $(selector, target = document) {
+    return target.querySelector(selector);
+}
