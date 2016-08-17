@@ -43,7 +43,7 @@ module.exports = function(grunt) {
             'src/firefox/chrome/tool.xul',
             'src/firefox/chrome/tool.js',
             'src/firefox/chrome/panel.js',
-            'src/firefox/chrome/resourceHelpers.jsm',
+            'src/firefox/chrome/resourceLoader.js',
             'src/firefox/locale/**',
             'src/firefox/skin/**',
             'src/firefox/*'
