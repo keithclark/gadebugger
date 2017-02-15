@@ -572,14 +572,14 @@ let BeaconPropertiesView = {
 /**
  * Localization convenience methods.
  */
-let L10N = function() {
+let L10N = (function() {
     const stringsBundle = document.getElementById("string-bundle");
     return {
         getStr: function(x)  {
             return stringsBundle.getString(x)
         }
     }
-}
+}());
 
 /**
  * Convenient way of emitting events from the panel window.
