@@ -4,7 +4,7 @@ const { classes: Cc, interfaces: Ci, utils: Cu, results: Cr } = Components;
 
 Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
-Cu.import('resource:///modules/devtools/gDevTools.jsm');
+Cu.import('resource://devtools/client/framework/gDevTools.jsm');
 
 XPCOMUtils.defineLazyGetter(this, 'osString', () => Cc['@mozilla.org/xre/app-info;1'].getService(Ci.nsIXULRuntime).OS);
 XPCOMUtils.defineLazyGetter(this, 'toolStrings', () => Services.strings.createBundle('chrome://gadebugger/locale/strings.properties'));
