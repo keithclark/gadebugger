@@ -2,8 +2,6 @@
 
 const { classes: Cc, interfaces: Ci, utils: Cu, results: Cr } = Components;
 
-const STRINGS_URI = 'chrome://gadebugger/locale/strings.properties';
-
 const EVENTS = {
   NETWORK_EVENT: 'networkEvent',
   NETWORK_EVENT_UPDATE: 'networkEventUpdate',
@@ -21,7 +19,6 @@ const appVersion = ResourceLoader.getAppMajorVersion();
 const {Heritage, WidgetMethods, ViewHelpers} = ResourceLoader.require('devtools/client/shared/widgets/view-helpers');
 const {SideMenuWidget} = ResourceLoader.require('resource://devtools/client/shared/widgets/SideMenuWidget.jsm');
 const {VariablesView} = ResourceLoader.require('resource://devtools/client/shared/widgets/VariablesView.jsm');
-const {LocalizationHelper} = ResourceLoader.require('devtools/client/shared/l10n');
 const EventEmitter = ResourceLoader.require('devtools/shared/event-emitter');
 const promise = ResourceLoader.require('promise');
 
@@ -575,7 +572,14 @@ let BeaconPropertiesView = {
 /**
  * Localization convenience methods.
  */
-let L10N = new LocalizationHelper(STRINGS_URI);
+let L10N = function() {
+    const stringsBundle = document.getElementById("string-bundle");
+    return {
+        getStr: function(x)  {
+            return stringsBundle.getString(x)
+        }
+    }
+}
 
 /**
  * Convenient way of emitting events from the panel window.

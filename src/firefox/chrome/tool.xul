@@ -3,6 +3,10 @@
 <?xml-stylesheet href="chrome://gadebugger/skin/style.css" type="text/css"?>
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml">
 
+ <stringbundleset id="stringbundleset">
+   <stringbundle id="string-bundle" src="chrome://gadebugger/locale/strings.properties"/>
+ </stringbundleset>
+
   <script type="application/javascript;version=1.8" src="chrome://devtools/content/shared/theme-switching.js" /><!-- Firefox 44+ -->
   <script type="application/javascript;version=1.8" src="chrome://browser/content/devtools/theme-switching.js" /><!-- Firefox <44 -->
   <script src="tool.js" />

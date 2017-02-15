@@ -1,7 +1,7 @@
 {
   "name": "gadebugger",
   "description": "A browser extension for debugging Google Analytics tracking code",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "homepage": "http://github.com/keithclark/gadebugger",
   "author": {
     "name": "Keith Clark",

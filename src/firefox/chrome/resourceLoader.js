@@ -30,14 +30,7 @@ if (appMajorVer >= 48) {
 
 ResourceLoader.require = function (url) {
 
-    if (url === 'devtools/client/shared/l10n') {
-        // Prior to v48, the localization helpers were in ViewHelpers.jsm
-        if (appMajorVer < 48) {
-            return {
-                LocalizationHelper: ResourceLoader.require('devtools/client/shared/widgets/view-helpers').ViewHelpers.L10N
-            }
-        }
-    } else if (url === 'devtools/client/shared/widgets/view-helpers') {
+    if (url === 'devtools/client/shared/widgets/view-helpers') {
         if (appMajorVer < 44) {
             // Prior to v44, ViewHelpers was in a different directory. (see: https://bugzil.la/912121)
             url = 'resource:///modules/devtools/ViewHelpers.jsm';
