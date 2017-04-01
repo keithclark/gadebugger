@@ -5,6 +5,10 @@ var GADebuggerAPI = (function() {
 
     'use strict';
 
+    document.querySelector('body').classList.add(
+        'dev-tools-theme-' + chrome.devtools.panels.themeName
+    );
+
     var trackerObjects = [],
         capturing = false,
         elements = {
