@@ -1,1 +1,96 @@
+/*
+    Default Chrome dark mode colours
 
+    light orange(attribute value): rgb(242, 151, 102)
+    light blue(tag): rgb(93, 176, 215)
+    lighter blue(attribute name) : rgb(155, 187, 220)
+    grey(divider) : rgb(92, 92, 92)
+    light grey(links : hsl(0, 0%, 67%)
+ */
+
+/* Header bar */
+.dev-tools-theme-dark .toolbar {
+    border-color: rgb(92, 92, 92);
+}
+.dev-tools-theme-dark .toolbar__item {
+    color: rgb(235, 235, 235);
+}
+
+.dev-tools-theme-dark .glyph {
+    background-color: rgb(235, 235, 235);
+}
+
+/* Left side bar */
+.dev-tools-theme-dark .sidebar {
+    background-color: transparent;
+}
+
+.dev-tools-theme-dark .sidebar__title {
+  color: rgb(210, 210, 210);
+  text-shadow: rgba(43, 43, 43, 0.81) -1px -2px 0;
+}
+
+.dev-tools-theme-dark #tracker-list li {
+  color: rgb(210, 210, 210);
+}
+
+.dev-tools-theme-dark #tracker-list i {
+  color: rgb(93, 176, 215);
+}
+
+
+/* Main area */
+.dev-tools-theme-dark .splitview__panel:not(:first-child) {
+  border-color: rgb(92, 92, 92);
+}
+
+.dev-tools-theme-dark #tracker-data li {
+    border-color: rgb(92, 92, 92);
+    color: rgb(93, 176, 215);
+}
+
+
+/* Right attributes area */
+.dev-tools-theme-dark .property__name {
+    color: rgb(155, 187, 220);
+}
+
+.dev-tools-theme-dark .property--string {
+    color: rgb(242, 151, 102);
+}
+
+.dev-tools-theme-dark .property--boolean {
+    color: rgb(182, 100, 242);
+}
+
+.dev-tools-theme-dark .property--object {
+    color: rgb(180, 180, 180);
+}
+
+.dev-tools-theme-dark .property--number {
+    color: rgb(93, 196, 235);
+}
+
+.dev-tools-theme-dark .group__header {
+    background: transparent;
+    border-color: rgb(92, 92, 92);
+    color: rgb(210, 210, 210);
+}
+
+.dev-tools-theme-dark .group__header:before {
+    background-color: rgb(235, 235, 235);
+}
+
+.dev-tools-theme-dark .property__opener {
+    background-color: rgb(235, 235, 235);
+}
+
+
+/* General states */
+.dev-tools-theme-dark .state--selected {
+    background-color: rgb(60, 60, 60) !important;
+}
+
+.dev-tools-theme-dark .state--inactive .state--selected {
+    background-color: rgb(110, 110, 110) !important;
+}
