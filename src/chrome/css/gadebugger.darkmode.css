@@ -2,9 +2,14 @@
     Default Chrome dark mode colours
 
     light orange(attribute value): rgb(242, 151, 102)
+    orange(selected state): rgb(199, 134, 38)
+
     light blue(tag): rgb(93, 176, 215)
     lighter blue(attribute name) : rgb(155, 187, 220)
+
     grey(divider) : rgb(92, 92, 92)
+    dark grey(alternate divider) : rgb(48, 48, 48)
+    alt grey(inactive selected state) : rgb(57, 57, 57)
     light grey(links : hsl(0, 0%, 67%)
  */
 
@@ -13,11 +18,11 @@
     border-color: rgb(92, 92, 92);
 }
 .dev-tools-theme-dark .toolbar__item {
-    color: rgb(235, 235, 235);
+    color: rgb(165, 165, 165);
 }
 
 .dev-tools-theme-dark .glyph {
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(165, 165, 165);
 }
 
 /* Left side bar */
@@ -26,27 +31,34 @@
 }
 
 .dev-tools-theme-dark .sidebar__title {
-  color: rgb(210, 210, 210);
-  text-shadow: rgba(43, 43, 43, 0.81) -1px -2px 0;
+    color: inherit;
+    text-shadow: rgba(43, 43, 43, 0.81) -1px -2px 0;
 }
 
 .dev-tools-theme-dark #tracker-list li {
-  color: rgb(210, 210, 210);
+    color: inherit;
 }
 
 .dev-tools-theme-dark #tracker-list i {
-  color: rgb(93, 176, 215);
+    color: rgb(127, 127, 127);
 }
 
+.dev-tools-theme-dark #tracker-list .state--selected i {
+    color: inherit;
+}
+
+.dev-tools-theme-dark #tracker-list .state--selected i {
+    color: inherit;
+}
 
 /* Main area */
 .dev-tools-theme-dark .splitview__panel:not(:first-child) {
-  border-color: rgb(92, 92, 92);
+    border-left: 1px solid rgb(92, 92, 92);
 }
 
 .dev-tools-theme-dark #tracker-data li {
-    border-color: rgb(92, 92, 92);
-    color: rgb(93, 176, 215);
+    border-color: rgb(48, 48, 48);
+    color: inherit;
 }
 
 
@@ -73,8 +85,8 @@
 
 .dev-tools-theme-dark .group__header {
     background: transparent;
-    border-color: rgb(92, 92, 92);
-    color: rgb(210, 210, 210);
+    border-color: rgb(48, 48, 48);
+    color: inherit;
 }
 
 .dev-tools-theme-dark .group__header:before {
@@ -87,10 +99,17 @@
 
 
 /* General states */
-.dev-tools-theme-dark .state--selected {
-    background-color: rgb(60, 60, 60) !important;
+.dev-tools-theme-dark {
+    color: rgb(213, 213, 213);
+    color: rgb(189, 198, 207);
 }
 
-.dev-tools-theme-dark .state--inactive .state--selected {
-    background-color: rgb(110, 110, 110) !important;
+.dev-tools-theme-dark .state--selected {
+    background-color: rgb(199, 134, 38) !important;
+    color: black !important;
+}
+
+.dev-tools-theme-dark.state--inactive .state--selected {
+    background-color: rgb(57, 57, 57) !important;
+    color: rgb(189, 198, 207) !important;
 }
