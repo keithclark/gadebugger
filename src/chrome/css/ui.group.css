@@ -16,6 +16,12 @@
     -webkit-user-select: none;  /* [2] */
 }
 
+.dev-tools-theme-dark .group__header {
+    background: transparent;
+    border-color: rgb(48, 48, 48);
+    color: inherit;
+}
+
 .group__header:before {
     content: "";
     vertical-align: middle;
@@ -26,6 +32,10 @@
     -webkit-mask-image: url(../img/glyphs.png);
     -webkit-mask-size: 160px 24px;
     -webkit-mask-position: -140px -7px;
+}
+
+.dev-tools-theme-dark .group__header:before {
+    background-color: rgb(235, 235, 235);
 }
 
 .group__header:active {
@@ -42,7 +52,7 @@
 
 .group--collapsed .group__body {
     display: none;
-}   
+}
 
 @media (-webkit-min-device-pixel-ratio: 1) {
     .group__header:before {

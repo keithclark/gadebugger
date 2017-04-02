@@ -6,6 +6,9 @@
     height: 24px;
     font-size: 0;
 }
+.dev-tools-theme-dark .glyph {
+    background-color: rgb(165, 165, 165);
+}
 .glyph--clear {
     -webkit-mask-position: -64px 0;
 }
@@ -18,3 +21,4 @@
         -webkit-mask-image: url(../img/glyphs-x2.png);
     }
 }
+

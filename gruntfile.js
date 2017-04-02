@@ -37,8 +37,7 @@ module.exports = function(grunt) {
             'src/chrome/css/ui.propertylist.css',
             'src/chrome/css/ui.itemlist.css',
             'src/chrome/css/ui.toolbar.css',
-            'src/chrome/css/gadebugger.css',
-            'src/chrome/css/gadebugger.darkmode.css'
+            'src/chrome/css/gadebugger.css'
         ],
         firefox: [
             'src/firefox/chrome/tool.xul',
