@@ -575,6 +575,9 @@ let BeaconPropertiesView = {
 let L10N = (function() {
     const stringsBundle = document.getElementById("string-bundle");
     return {
+        getFormatStr: function (name, value) {
+            return L10N.getStr(name).replace('%S', value);
+        },
         getStr: function(x)  {
             return stringsBundle.getString(x)
         }
