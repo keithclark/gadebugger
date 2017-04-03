@@ -6,6 +6,9 @@
     align-items: center;
     padding: 0 2px;
 }
+.dev-tools-theme-dark .toolbar {
+    border-color: rgb(92, 92, 92);
+}
 .toolbar input,
 .toolbar button {
     font: inherit;
@@ -17,6 +20,9 @@
     align-items: center;
     overflow: hidden;
     color: #5a5a5a;
+}
+.dev-tools-theme-dark .toolbar__item {
+    color: rgb(165, 165, 165);
 }
 
 /* labels

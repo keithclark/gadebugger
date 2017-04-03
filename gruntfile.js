@@ -90,7 +90,8 @@ module.exports = function(grunt) {
                 quotmark: 'single',
                 undef: true,
                 white: true,
-                unused: true
+                unused: true,
+                reporterOutput: ''
             },
             core: filterForLinting(files.coreScripts),
             chrome: filterForLinting(files.chromeScripts.concat('src/chrome/js/devtools.js'))
