@@ -8,8 +8,16 @@ body > .splitview {
     flex: 1;
 }
 
+.dev-tools-theme-dark {
+    color: rgb(189, 198, 207);
+}
+
 .sidebar {
     background-color: #eee;
+}
+
+.dev-tools-theme-dark .sidebar {
+    background-color: rgb(42, 42, 42);
 }
 
 .sidebar__title {
@@ -21,6 +29,11 @@ body > .splitview {
     color: rgb(92, 110, 129);
     text-shadow: rgba(255, 255, 255, 0.75) 0 1px 0;
     text-transform: uppercase;
+}
+
+.dev-tools-theme-dark .sidebar__title {
+    color: inherit;
+    text-shadow: rgba(43, 43, 43, 0.81) -1px -2px 0;
 }
 
 /* Hide `undefined` values in the property list */
@@ -93,12 +106,24 @@ body > .splitview {
     display: block;
 }
 
+.dev-tools-theme-dark #tracker-list i {
+    color: rgb(127, 127, 127);
+}
+
 #tracker-list .state--selected i {
+    color: inherit;
+}
+
+.dev-tools-theme-dark #tracker-list .state--selected i {
     color: inherit;
 }
 
 #tracker-list li {
     padding: 5px 10px;
+}
+
+.dev-tools-theme-dark #tracker-list li {
+    color: inherit;
 }
 
 
@@ -112,6 +137,11 @@ body > .splitview {
     overflow-x: hidden;
     text-overflow: ellipsis;
     line-height: 15px;
+}
+
+.dev-tools-theme-dark #tracker-data li {
+    border-color: rgb(48, 48, 48);
+    color: inherit;
 }
 
 #tracker-data .beacon {

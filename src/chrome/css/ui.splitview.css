@@ -10,7 +10,7 @@
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-    display: flex;  
+    display: flex;
     -webkit-flex-flow: row nowrap;
     flex-flow: row nowrap;
     height: 100%;
@@ -23,11 +23,16 @@
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
-    
+
 }
 .splitview__panel:not(:first-child) {
     border-left: 1px solid rgb(64%, 64%, 64%);
 }
+
+.dev-tools-theme-dark .splitview__panel:not(:first-child) {
+    border-left: 1px solid rgb(92, 92, 92);
+}
+
 .splitview__panel--full {
     -webkit-flex: 1 1 auto;
     flex: 1 1 auto;

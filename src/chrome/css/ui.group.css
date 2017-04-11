@@ -11,25 +11,32 @@
     padding: 0 5px;
     border-top: 1px solid #dadada;
     border-bottom: 1px solid #dadada;
-    line-height: 19px;
+    line-height: 21px;
     margin-bottom: -1px;        /* [1] */
     -webkit-user-select: none;  /* [2] */
+}
+
+.dev-tools-theme-dark .group__header {
+    background-color: rgb(42, 42, 42);
+    border-color: rgb(54, 54, 54);
+    color: inherit;
 }
 
 .group__header:before {
     content: "";
     vertical-align: middle;
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
+    margin-right: 2px;
     background-color: #888;
     -webkit-mask-image: url(../img/glyphs.png);
     -webkit-mask-size: 160px 24px;
     -webkit-mask-position: -140px -7px;
 }
 
-.group__header:active {
-    background: #ccc;
+.dev-tools-theme-dark .group__header:before {
+    background-color: rgb(119, 119, 119)
 }
 
 .group__body {
@@ -42,7 +49,7 @@
 
 .group--collapsed .group__body {
     display: none;
-}   
+}
 
 @media (-webkit-min-device-pixel-ratio: 1) {
     .group__header:before {

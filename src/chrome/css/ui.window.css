@@ -1,4 +1,4 @@
-/* UI.SplitView Control Styles
+/* UI.Window Styles
 =================================================== */
 
 /* Default styles
@@ -14,8 +14,7 @@ html, body {
     margin: 0;          /* [1] */
     padding: 0;         /* [1] */
     cursor: default;    /* [2] */
-    font-size: 12px;
-    font-family: 'Lucida Grande', sans-serif;
+    font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif
 }
 
 
@@ -27,7 +26,17 @@ html, body {
     color: rgb(255, 255, 255);
 }
 
+.dev-tools-theme-dark .state--selected {
+    background-color: rgb(199, 134, 38) !important;
+    color: black !important;
+}
+
 .state--inactive .state--selected {
     background-color: rgb(212, 212, 212);
     color: inherit;
+}
+
+.dev-tools-theme-dark.state--inactive .state--selected {
+    background-color: rgb(57, 57, 57) !important;
+    color: rgb(189, 198, 207) !important;
 }

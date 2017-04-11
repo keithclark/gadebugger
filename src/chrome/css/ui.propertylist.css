@@ -15,6 +15,10 @@
 }
 .property__name {
     color: #c00;
+    padding: 1px 0;
+}
+.dev-tools-theme-dark .property__name {
+    color: rgb(155, 187, 220);
 }
 .property__name:after {
     content: ": ";
@@ -42,14 +46,26 @@
 .property--boolean {
     color: #c4f;
 }
+.dev-tools-theme-dark .property--boolean {
+    color: rgb(182, 100, 242);
+}
 .property--object {
     color: #666;
+}
+.dev-tools-theme-dark .property--object {
+    color: rgb(180, 180, 180);
 }
 .property--number {
     color: #0c0;
 }
+.dev-tools-theme-dark .property--number {
+    color: rgb(93, 196, 235);
+}
 .property--string {
     color: #00c;
+}
+.dev-tools-theme-dark .property--string {
+    color: rgb(242, 151, 102);
 }
 .property--string > .property__value:before,
   .property--string > .property__value:after {
@@ -96,6 +112,9 @@
     -webkit-mask-position: -140px -7px;
     -webkit-user-select: none;  /* [1] */
 }
+.dev-tools-theme-dark .property__opener {
+    background-color: rgb(119, 119, 119)
+}
 .property--collapsed .property__opener {
     -webkit-mask-position: -108px -7px;
 }
@@ -103,7 +122,7 @@
     display: none;
 }
 
-@media (-webkit-min-device-pixel-ratio: 1.5) {
+@media (min-device-pixel-ratio: 1.5) {
     .property__opener {
         -webkit-mask-image: url(../img/glyphs-x2.png);
     }
