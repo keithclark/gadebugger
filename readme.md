@@ -54,9 +54,11 @@ If you modify the core or chrome source code you'll need to rebuild the extensio
 
 ### Firefox
 
-First, make sure you've built the Firefox add-on. Browse to your Firefox profile, find the extensions folder and create a new text file named `gadebugger@browserextensions.keithclark.co.uk`, paste the path to the Firefox build directoy and restart firefox.
+You can only develop and test add-ons using the Developer Editon of Firefox. Release versions of Firefox require add-ons to be digitally signed before they can be installed.
 
-If you modify the core or add-on source code you'll need to rebuild the extension (the watch task will do this for you) and then restart devtools to see your changes.
+First, make sure you've built the Firefox add-on. Next, launch Firefox and browse to [about:debugging](about:debugging). Click the **'Load Temporary Add-on'** button, browse to your add-on's build folder and select the `install.rdf` file. If your add-on loads correctly, **Google Analtics Debugger** should appear in the extensions list. You can now open devtools and select the **'GA Debugger'** tab.
+
+If you modify the core or add-on source code you'll need to rebuild the extension (the watch task will do this for you) and click the **'Reload'** button in the Add-on debugger menu to see your changes.
 
 ### Opera
 
