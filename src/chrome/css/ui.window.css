@@ -1,4 +1,4 @@
-/* UI.SplitView Control Styles
+/* UI.Window Styles
 =================================================== */
 
 /* Default styles
@@ -14,8 +14,7 @@ html, body {
     margin: 0;          /* [1] */
     padding: 0;         /* [1] */
     cursor: default;    /* [2] */
-    font-size: 12px;
-    font-family: 'Lucida Grande', sans-serif;
+    font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif
 }
 
 
