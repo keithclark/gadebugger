@@ -240,6 +240,16 @@ var UaBeacon = (function() {
                 }
                 return data;
             }
+        },
+        experiment: {
+            get: function() {
+                if (this.params.xid) {
+                    return {
+                        id: this.params.xid,
+                        variant: parseInt(this.params.xvar, 10)
+                    };
+                }
+            }
         }
     });
 

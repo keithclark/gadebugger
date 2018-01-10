@@ -24,6 +24,7 @@ var GADebuggerAPI = (function() {
             transactionProps: '#transaction-properties',
             transactionItemProps: '#transaction-item-properties',
             socialProps: '#social-properties',
+            experimentProps: '#experiment-properties',
             contentGroupProps: '#content-group-properties',
             captureButton: '#capture-button',
             clearButton: '#clear-button',
@@ -251,6 +252,11 @@ var GADebuggerAPI = (function() {
             'Network': beacon.social.network,
             'Action': beacon.social.action,
             'Target': beacon.social.target
+        });
+
+        setProperties(elements.experimentProps, beacon.experiment && {
+            'ID': beacon.experiment.id,
+            'Variant': beacon.experiment.variant
         });
 
         if (beacon.customVars) {
