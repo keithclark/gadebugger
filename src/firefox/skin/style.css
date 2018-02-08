@@ -35,7 +35,8 @@
     padding-left: 20px;
 }
 
-.beacon--pageview {
+.beacon--pageview,
+.beacon--screenview {
     background-image: url(beacon-pageview.png);
 }
 
