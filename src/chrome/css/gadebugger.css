@@ -51,7 +51,8 @@ body > .splitview {
     padding-left: 25px;
 }
 
-.beacon--pageview {
+.beacon--pageview,
+.beacon--screenview {
     background-image: url(../img/beacon-pageview.png);
 }
 
